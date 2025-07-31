@@ -1,4 +1,4 @@
-An **Ecommerce** application for Clothings. __
+An **Ecommerce** application for Clothings. <br />
 Check out the deployed site [`here`](https://nextecomm.netlify.app/)
 
 ## Tech Used -
