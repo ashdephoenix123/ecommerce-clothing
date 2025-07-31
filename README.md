@@ -20,3 +20,6 @@ SENDGRID_API_KEY
 - MongoDB for Database
 - RazorPay for Payments
 - Google ReCaptcha
+
+## INFO for personal Use -
+Frontend deployed from Netlify - primary Github account
