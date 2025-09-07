@@ -7,66 +7,62 @@ const popularCategories = [
   {
     id: 1,
     label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    image: `/catagories/men-clothing.jpg`,
     link: "/tshirts",
   },
   {
     id: 2,
-    label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    label: `Women's Clothing`,
+    image: `/catagories/women-clothing.jpg`,
     link: "/tshirts",
   },
   {
     id: 3,
-    label: `Women's Clothing`,
-    image: `/Man.jpeg`,
+    label: `T-Shirts`,
+    image: `/catagories/tshirts.jpg`,
     link: "/tshirts",
   },
   {
     id: 4,
-    label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    label: `Hoodies`,
+    image: `/catagories/hoodies.jpg`,
     link: "/tshirts",
   },
   {
     id: 5,
-    label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    label: `Mugs`,
+    image: `/catagories/mugs.jpg`,
     link: "/tshirts",
   },
   {
     id: 6,
-    label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    label: `Stickers`,
+    image: `/catagories/stickers.jpg`,
     link: "/tshirts",
   },
   {
     id: 7,
-    label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    label: `Shoes`,
+    image: `/catagories/shoes.jpg`,
     link: "/tshirts",
   },
   {
     id: 8,
-    label: `Men's Clothing`,
-    image: `/Man.jpeg`,
+    label: `Headphones`,
+    image: `/catagories/headphones.jpg`,
     link: "/tshirts",
   },
 ];
 
 const PopularCategories = () => {
   const allCategories = popularCategories.map((cat) => (
-    <Link
-      href={cat.link}
-      key={cat.id}
-      className="rounded-2xl overflow-hidden space-y-4"
-    >
+    <Link href={cat.link} key={cat.id} className="space-y-4">
       <Image
         src={cat.image}
         alt={cat.label + " image"}
         width={340}
         height={320}
-        className="w-full h-96 object-cover"
+        className="w-full h-96 object-cover rounded-2xl"
       />
       <p className="text-center">{cat.label}</p>
     </Link>
@@ -77,7 +73,7 @@ const PopularCategories = () => {
         Popular Categories
       </Header>
 
-      <div className="container grid grid-cols-6 gap-x-6 gap-y-8">
+      <div className="md:container md:grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-8">
         {allCategories}
       </div>
     </section>
