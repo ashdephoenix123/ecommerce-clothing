@@ -86,3 +86,14 @@ ul.slick-dots {
 .slick-dots li.slick-active button:before {
   color: #fff !important;
 }
+
+.carousel {
+  .slick-prev:before,
+  .slick-next:before {
+    display: none;
+  }
+
+  .slick-dots li {
+    margin: 0;
+  }
+}

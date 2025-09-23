@@ -1,47 +1,47 @@
-import React from "react";
-import Slider from "react-slick";
 import Image from "next/image";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Carousel from "./Carousel";
 
 const bannerContent = [
   {
     id: 1,
-    image: "/banner/banner-image-1.png",
+    image: "https://picsum.photos/id/15/2500/1667",
     label: "Banner 1",
+    color: "green",
   },
   {
     id: 2,
-    image: "/banner/banner-2.png",
+    image: "https://picsum.photos/id/16/2500/1667",
     label: "Banner 2",
+    color: "red",
   },
 ];
 
-const Banner = () => {
-  let settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+let settings = {
+  dots: true,
+  autoplay: true,
+  speed: 1000,
+  autoplaySpeed: 5000,
+  cssEase: "linear",
+  fade: true,
+  pauseOnHover: false,
+};
 
+const Banner = () => {
   return (
-    <Slider {...settings} className="md:m-12">
+    <Carousel settings={settings} className="overflow-hidden">
       {bannerContent.map((cont) => (
-        <div
-          key={cont.id}
-          className="relative w-full h-[calc(100vh-140px)] md:rounded-xl overflow-hidden"
-        >
+        <div key={cont.id} className="relative h-[350px] w-full">
           <Image
-            fill
             src={cont.image}
             alt={cont.label}
-            className="absolute object-cover object-bottom"
+            fill
+            className="object-cover w-full h-full"
           />
         </div>
       ))}
-    </Slider>
+    </Carousel>
   );
 };
 
