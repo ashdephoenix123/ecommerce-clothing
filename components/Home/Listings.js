@@ -12,14 +12,34 @@ const Listings = ({ categories, options, className = "" }) => {
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1240,
+        settings: {
+          slidesToShow: 6,
+        },
+      },
+      {
+        breakpoint: 1025,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
     ...options,
   };
   return (
-    <Carousel settings={settings} className="md:m-12">
+    <Carousel settings={settings} className="mx-4 my-8 md:m-12">
       {categories.map((cont) => (
         <div key={cont.id} className="px-2">
           <div
-            className={`relative w-full h-72 px-4 md:rounded-xl overflow-hidden ${className}`}
+            className={`relative w-full h-72 px-4 overflow-hidden ${className}`}
           >
             <Image
               fill

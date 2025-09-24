@@ -52,6 +52,18 @@ const popularCategories = [
     image: `/catagories/headphones.jpg`,
     link: "/tshirts",
   },
+  {
+    id: 9,
+    label: `Mugs`,
+    image: `/catagories/mugs.jpg`,
+    link: "/tshirts",
+  },
+  {
+    id: 10,
+    label: `Stickers`,
+    image: `/catagories/stickers.jpg`,
+    link: "/tshirts",
+  },
 ];
 
 const PopularCategories = () => {
@@ -62,18 +74,21 @@ const PopularCategories = () => {
         alt={cat.label + " image"}
         width={340}
         height={320}
-        className="w-full h-96 object-cover rounded-2xl"
+        className="w-full h-[250px] md:h-[300px] object-cover"
       />
       <p className="text-center">{cat.label}</p>
     </Link>
   ));
   return (
-    <section className="container space-y-12">
-      <Header className="font-semibold text-5xl text-center" element="h2">
-        Popular Categories
+    <section className="m-6 md:m-14 space-y-12">
+      <p className="uppercase font-semibold text-2xl text-neutral-500">
+        In the spotlight
+      </p>
+      <Header className="font-semibold text-4xl !mt-4" element="h2">
+        Hottest Brands on offer
       </Header>
 
-      <div className="md:container md:grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
         {allCategories}
       </div>
     </section>
