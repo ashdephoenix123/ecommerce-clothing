@@ -114,3 +114,105 @@ export const categories = [
     href: "/tshirts",
   },
 ];
+
+export const popularCategories = [
+  {
+    id: 1,
+    label: `Men's Clothing`,
+    image: `/popularCategories/dnmx.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 2,
+    label: `Women's Clothing`,
+    image: `/popularCategories/uspolo.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 3,
+    label: `T-Shirts`,
+    image: `/popularCategories/forevernew.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 4,
+    label: `Hoodies`,
+    image: `/popularCategories/libas.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 5,
+    label: `Mugs`,
+    image: `/popularCategories/adidas.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 6,
+    label: `Stickers`,
+    image: `/popularCategories/puma.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 7,
+    label: `Shoes`,
+    image: `/popularCategories/zudio.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 8,
+    label: `Headphones`,
+    image: `/popularCategories/hnm1.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 9,
+    label: `Mugs`,
+    image: `/popularCategories/levis1.png`,
+    link: "/tshirts",
+  },
+  {
+    id: 10,
+    label: `Stickers`,
+    image: `/popularCategories/titan1.png`,
+    link: "/tshirts",
+  },
+];
+
+export const categoriesOnOffer = [
+  {
+    id: 1,
+    label: `Men's Clothing`,
+    image: `/catagories/formals.png`,
+    href: "/tshirts",
+  },
+  {
+    id: 2,
+    label: `Women's Clothing`,
+    image: `/catagories/demins.png`,
+    href: "/tshirts",
+  },
+  {
+    id: 3,
+    label: `T-Shirts`,
+    image: `/catagories/pants.png`,
+    href: "/tshirts",
+  },
+  {
+    id: 4,
+    label: `Hoodies`,
+    image: `/catagories/bags.png`,
+    href: "/tshirts",
+  },
+  {
+    id: 5,
+    label: `Mugs`,
+    image: `/catagories/shoes.png`,
+    href: "/tshirts",
+  },
+  {
+    id: 6,
+    label: `Stickers`,
+    image: `/catagories/yoga.png`,
+    href: "/tshirts",
+  },
+];

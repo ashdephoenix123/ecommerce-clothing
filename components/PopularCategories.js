@@ -2,69 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Image from "next/image";
 import Link from "next/link";
-
-const popularCategories = [
-  {
-    id: 1,
-    label: `Men's Clothing`,
-    image: `/catagories/men-clothing.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 2,
-    label: `Women's Clothing`,
-    image: `/catagories/women-clothing.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 3,
-    label: `T-Shirts`,
-    image: `/catagories/tshirts.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 4,
-    label: `Hoodies`,
-    image: `/catagories/hoodies.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 5,
-    label: `Mugs`,
-    image: `/catagories/mugs.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 6,
-    label: `Stickers`,
-    image: `/catagories/stickers.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 7,
-    label: `Shoes`,
-    image: `/catagories/shoes.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 8,
-    label: `Headphones`,
-    image: `/catagories/headphones.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 9,
-    label: `Mugs`,
-    image: `/catagories/mugs.jpg`,
-    link: "/tshirts",
-  },
-  {
-    id: 10,
-    label: `Stickers`,
-    image: `/catagories/stickers.jpg`,
-    link: "/tshirts",
-  },
-];
+import { popularCategories } from "@/constants/home";
 
 const PopularCategories = () => {
   const allCategories = popularCategories.map((cat) => (
@@ -76,7 +14,6 @@ const PopularCategories = () => {
         height={320}
         className="w-full h-[250px] md:h-[300px] object-cover"
       />
-      <p className="text-center">{cat.label}</p>
     </Link>
   ));
   return (
