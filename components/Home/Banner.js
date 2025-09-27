@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Carousel from "./Carousel";
 import { bannerContent } from "@/constants/home";
+import Link from "next/link";
 
 let settings = {
   dots: true,
@@ -18,13 +19,15 @@ const Banner = () => {
   return (
     <Carousel settings={settings} className="overflow-hidden">
       {bannerContent.map((cont) => (
-        <div key={cont.id} className="relative h-[350px] w-full">
-          <Image
-            src={cont.image}
-            alt={cont.label}
-            fill
-            className="object-cover w-full h-full"
-          />
+        <div key={cont.id} className="relative h-[450px] w-full">
+          <Link href={cont.href}>
+            <Image
+              src={cont.image}
+              alt={cont.label}
+              fill
+              className="object-cover"
+            />
+          </Link>
         </div>
       ))}
     </Carousel>

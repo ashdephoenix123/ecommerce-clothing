@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import NextArrow from "../icons/NextArrow";
 import PrevArrow from "../icons/PrevArrow";
 import Carousel from "./Carousel";
+import Link from "next/link";
 
 const Listings = ({ categories, options, className = "" }) => {
   let settings = {
@@ -41,12 +42,14 @@ const Listings = ({ categories, options, className = "" }) => {
           <div
             className={`relative w-full h-72 px-4 overflow-hidden ${className}`}
           >
-            <Image
-              fill
-              src={cont.image}
-              alt={cont.label}
-              className="absolute object-cover"
-            />
+            <Link href={cont.href}>
+              <Image
+                fill
+                src={cont.image}
+                alt={cont.label}
+                className="absolute object-cover"
+              />
+            </Link>
           </div>
         </div>
       ))}
