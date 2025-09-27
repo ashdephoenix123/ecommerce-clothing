@@ -119,17 +119,19 @@ export default function App({ Component, pageProps }) {
         subtotal={subtotal}
       />
       <TopMargin />
-      <Component
-        usertoken={usertoken}
-        cart={cart}
-        buyNow={buyNow}
-        addToCart={addToCart}
-        updateCartItem={updateCartItem}
-        clearCart={clearCart}
-        removeItem={removeItem}
-        subtotal={subtotal}
-        {...pageProps}
-      />
+      <main className="main">
+        <Component
+          usertoken={usertoken}
+          cart={cart}
+          buyNow={buyNow}
+          addToCart={addToCart}
+          updateCartItem={updateCartItem}
+          clearCart={clearCart}
+          removeItem={removeItem}
+          subtotal={subtotal}
+          {...pageProps}
+        />
+      </main>
       <Footer />
     </>
   );
