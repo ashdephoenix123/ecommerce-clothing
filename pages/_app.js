@@ -6,6 +6,8 @@ import TopMargin from "@/components/TopMargin";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import LoadingBar from "react-top-loading-bar";
+import { ThemeProvider } from "@mui/material";
+import theme from "@/theme";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -101,38 +103,39 @@ export default function App({ Component, pageProps }) {
         <title>The Sharkk Co. - Your Online Shoppers Stop</title>
         <meta name="description" content="Your Online Shoppers Stop!" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/fav.png" />
       </Head>
-      <LoadingBar
-        color="#2f8e07"
-        progress={progress}
-        onLoaderFinished={() => setProgress(0)}
-      />
-      <Navbar
-        logout={logout}
-        usertoken={usertoken}
-        cart={cart}
-        addToCart={addToCart}
-        updateCartItem={updateCartItem}
-        clearCart={clearCart}
-        removeItem={removeItem}
-        subtotal={subtotal}
-      />
-      <TopMargin />
-      <main className="main">
-        <Component
+      <ThemeProvider theme={theme}>
+        <LoadingBar
+          color="#2f8e07"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
+        <Navbar
+          logout={logout}
           usertoken={usertoken}
           cart={cart}
-          buyNow={buyNow}
           addToCart={addToCart}
           updateCartItem={updateCartItem}
           clearCart={clearCart}
           removeItem={removeItem}
           subtotal={subtotal}
-          {...pageProps}
         />
-      </main>
-      <Footer />
+        <TopMargin />
+        <main className="main">
+          <Component
+            usertoken={usertoken}
+            cart={cart}
+            buyNow={buyNow}
+            addToCart={addToCart}
+            updateCartItem={updateCartItem}
+            clearCart={clearCart}
+            removeItem={removeItem}
+            subtotal={subtotal}
+            {...pageProps}
+          />
+        </main>
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }
