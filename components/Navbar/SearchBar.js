@@ -6,10 +6,7 @@ const SearchBar = () => {
 
   return (
     <div className="flex-1">
-      <form
-        className={`${styles.search} !hidden lg:!block`}
-        onSubmit={() => {}}
-      >
+      <form className={`${styles.search} hidden lg:flex`} onSubmit={() => {}}>
         <input
           type="text"
           name="search"

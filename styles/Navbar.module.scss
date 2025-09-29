@@ -26,10 +26,11 @@
 
 .search {
   flex: 1;
-  display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  margin-right: auto;
+  margin-right: 1rem;
+  max-width: 40rem;
+  margin-left: auto;
 
   @media only screen and (max-width: 940px) {
     margin-right: 0;
