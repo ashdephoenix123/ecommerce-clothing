@@ -133,6 +133,13 @@ const theme = createTheme({
         }),
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: theme.typography.fontSize * 0.9,
+        }),
+      },
+    },
   },
 });
 

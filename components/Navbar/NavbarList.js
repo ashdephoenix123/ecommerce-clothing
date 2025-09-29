@@ -1,0 +1,45 @@
+import React, { useState } from "react";
+import MegaMenu from "../MegaMenu";
+import { menucategories } from "@/constants/menucategories";
+
+const NavbarList = () => {
+  const [menu, setMenu] = useState(null);
+  const [isMegaMenuHovered, setIsMegaMenuHovered] = useState(false);
+
+  const activateMegaMenu = (id) => {
+    const hovered = menucategories.find((menu) => menu.id === id);
+    setMenu(hovered);
+  };
+
+  const handleMouseLeave = () => {
+    // Only hide the MegaMenu if the mouse is not hovering over it
+    if (!isMegaMenuHovered) {
+      setMenu(null);
+    }
+  };
+
+  return (
+    <ul className="justify-center items-center mx-12 hidden lg:flex">
+      {menucategories.map((menu) => (
+        <li
+          key={menu.id}
+          className="px-8 py-12 text-white uppercase font-semibold text-xl"
+          onMouseOver={() => activateMegaMenu(menu.id)}
+          onMouseLeave={handleMouseLeave}
+        >
+          {menu.label}
+        </li>
+      ))}
+      {menu && (
+        <MegaMenu
+          categories={menu.categories}
+          onClick={() => setIsMegaMenuHovered(false)}
+          onMouseEnter={() => setIsMegaMenuHovered(true)}
+          onMouseLeave={() => setIsMegaMenuHovered(false)}
+        />
+      )}
+    </ul>
+  );
+};
+
+export default NavbarList;
