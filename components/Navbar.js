@@ -1,13 +1,14 @@
-import React, { useRef, useState } from "react";
+import { menucategories } from "@/constants/menucategories";
 import Link from "next/link";
-import styles from "../styles/Navbar.module.scss";
-import { IoMdArrowDropup } from "react-icons/io";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { HiPlusCircle, HiMinusCircle } from "react-icons/hi";
-import { BsFillBagFill } from "react-icons/bs";
-import { MdDelete, MdAccountCircle } from "react-icons/md";
 import { useRouter } from "next/router";
-import Error from "next/error";
+import { useRef, useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BsFillBagFill } from "react-icons/bs";
+import { HiMinusCircle, HiPlusCircle } from "react-icons/hi";
+import { IoMdArrowDropup } from "react-icons/io";
+import { MdAccountCircle, MdDelete } from "react-icons/md";
+import styles from "../styles/Navbar.module.scss";
+import MegaMenu from "./MegaMenu";
 
 const Navbar = ({
   cart,
@@ -24,6 +25,8 @@ const Navbar = ({
   const router = useRouter();
 
   const [searchText, setSearchText] = useState("");
+  const [menu, setMenu] = useState(null);
+  const [isMegaMenuHovered, setIsMegaMenuHovered] = useState(false);
 
   function unCheck() {
     if (cartCheckboxRef.current) {
@@ -85,8 +88,20 @@ const Navbar = ({
     }
   };
 
+  const activateMegaMenu = (id) => {
+    const hovered = menucategories.find((menu) => menu.id === id);
+    setMenu(hovered);
+  };
+
+  const handleMouseLeave = () => {
+    // Only hide the MegaMenu if the mouse is not hovering over it
+    if (!isMegaMenuHovered) {
+      setMenu(null);
+    }
+  };
+
   return (
-    <>
+    <section className="relative z-10">
       <nav className={styles.nav}>
         <div className={styles.navigation}>
           <input
@@ -178,6 +193,26 @@ const Navbar = ({
         <Link href="/">
           <img className={`${styles.logo}`} src="/6.png" alt="company logo" />
         </Link>
+        <ul className="flex justify-center items-center mx-12">
+          {menucategories.map((menu) => (
+            <li
+              key={menu.id}
+              className="px-8 py-12 text-white uppercase font-semibold text-xl"
+              onMouseOver={() => activateMegaMenu(menu.id)}
+              onMouseLeave={handleMouseLeave}
+            >
+              {menu.label}
+            </li>
+          ))}
+          {menu && (
+            <MegaMenu
+              categories={menu.categories}
+              onClick={() => setIsMegaMenuHovered(false)}
+              onMouseEnter={() => setIsMegaMenuHovered(true)}
+              onMouseLeave={() => setIsMegaMenuHovered(false)}
+            />
+          )}
+        </ul>
         <form className={styles.search} onSubmit={searchDB}>
           <input
             type="text"
@@ -349,7 +384,7 @@ const Navbar = ({
           </div>
         </div>
       </nav>
-    </>
+    </section>
   );
 };
 
