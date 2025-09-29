@@ -1,5 +1,5 @@
 import { filtersOption } from "@/constants/mock";
-import { Checkbox, FormControlLabel, FormGroup, Slider } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import Filter from "./Filter";
@@ -13,9 +13,19 @@ const Filters = () => {
 
   return (
     <section>
-      <Typography variant="h1" sx={{ fontSize: 18, mb: 2 }}>
-        Filters
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <Typography variant="h1" sx={{ fontSize: 18, px: "16px" }}>
+          Filters
+        </Typography>
+        {/* <Button variant="outlined">Reset</Button> */}
+      </Box>
       {filtersOption.map((filter) => (
         <Filter
           key={filter.id}
@@ -29,7 +39,7 @@ const Filters = () => {
               <FormControlLabel
                 key={option.label}
                 labelPlacement="start"
-                control={<Checkbox defaultChecked />}
+                control={<Checkbox size="medium" />}
                 label={option.label}
                 sx={{ flexDirection: "row", ml: 0 }}
               />

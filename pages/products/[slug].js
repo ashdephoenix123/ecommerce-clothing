@@ -1,9 +1,8 @@
+import Filters from "@/components/Filters";
 import ProductCard from "@/components/ProductCard";
 import { productsData } from "@/constants/mock";
 import { useRouter } from "next/router";
 import styles from "../../styles/tshirts.module.scss";
-import { FaChevronDown } from "react-icons/fa";
-import Filters from "@/components/Filters";
 
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -14,9 +13,9 @@ const Product = () => {
   let products = productsData;
 
   return (
-    <section className="flex">
+    <section className="flex my-20">
       <div className="shrink-0 md:basis-1/5 hidden lg:block p-4">
-       <Filters />
+        <Filters />
       </div>
       <div className="flex-1">
         <h2 className={styles.productTitle}>Trending {title} Collection</h2>

@@ -2,27 +2,25 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
-  //   palette: {
-  //     primary: {
-  //       main: "#1976d2", // custom primary color
-  //     },
-  //     secondary: {
-  //       main: "#ff4081", // custom secondary color
-  //     },
-  //     background: {
-  //       default: "#f9f9f9",
-  //       paper: "#ffffff",
-  //     },
-  //     text: {
-  //       primary: "#222",
-  //       secondary: "#555",
-  //     },
-  //   },
+  palette: {
+    primary: {
+      main: "#16a34a",
+      light: "#63a4ff",
+      dark: "#0d2329",
+      contrastText: "#fff",
+    },
+    background: {
+      default: "#f5f5f5",
+      paper: "#ffffff",
+    },
+    text: {
+      primary: "#212121",
+      secondary: "#757575",
+    },
+  },
   typography: {
     fontFamily: "'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-
-    // Global font sizes
-    fontSize: 16, // default (MUI default is 14)
+    fontSize: 16,
 
     h1: { fontSize: "2.5rem", fontWeight: 600 },
     h2: { fontSize: "2rem", fontWeight: 600 },
@@ -37,22 +35,20 @@ const theme = createTheme({
     button: { fontSize: "2", textTransform: "none" },
   },
   components: {
-    // Button customization
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "12px",
-          padding: "10px 20px",
+          borderRadius: 4,
+          padding: "4px 16px",
         },
-        containedPrimary: {
-          backgroundColor: "#1976d2",
+        containedPrimary: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.main,
           "&:hover": {
-            backgroundColor: "#115293",
+            backgroundColor: theme.palette.primary.main,
           },
-        },
+        }),
       },
     },
-    // TextField customization
     MuiTextField: {
       styleOverrides: {
         root: {
@@ -105,24 +101,37 @@ const theme = createTheme({
     },
     MuiTypography: {
       styleOverrides: {
-        root: {
-          fontSize: "1.2rem", // details text size
-        },
+        root: ({ theme }) => ({
+          fontSize: "1.4rem",
+          color: theme.palette.grey["700"],
+        }),
       },
     },
     MuiCheckbox: {
       styleOverrides: {
-        root: {
-          color: "green", // details text size
+        root: ({ theme }) => ({
+          color: theme.palette.primary.dark, // details text size
           padding: "6px 6px 6px 0",
           "&.Mui-checked": {
-            color: "green", // checked state
+            color: theme.palette.primary.main,
           },
-        },
+        }),
       },
     },
     MuiSlider: {
-      color: "red",
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.primary.main,
+        }),
+      },
+    },
+    MuiFilledInput: {
+      styleOverrides: {
+        input: () => ({
+          paddingTop: "8px",
+          fontSize: "1.4rem",
+        }),
+      },
     },
   },
 });

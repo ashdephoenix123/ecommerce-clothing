@@ -106,7 +106,6 @@ export const productsData = {
   },
 };
 
-
 export const filtersOption = [
   {
     id: 1,
@@ -122,28 +121,6 @@ export const filtersOption = [
     ],
   },
   {
-    id: 2,
-    label: "Footwear",
-    options: [
-      { label: "Sneakers" },
-      { label: "Formal Shoes" },
-      { label: "Sandals" },
-      { label: "Flip Flops" },
-      { label: "Boots" },
-    ],
-  },
-  {
-    id: 3,
-    label: "Accessories",
-    options: [
-      { label: "Watches" },
-      { label: "Belts" },
-      { label: "Wallets" },
-      { label: "Caps & Hats" },
-      { label: "Sunglasses" },
-    ],
-  },
-  {
     id: 4,
     label: "Brands",
     options: [
@@ -152,16 +129,6 @@ export const filtersOption = [
       { label: "Puma" },
       { label: "Levi's" },
       { label: "Zara" },
-    ],
-  },
-  {
-    id: 5,
-    label: "Price",
-    options: [
-      { label: "Under ₹500" },
-      { label: "₹500 - ₹1000" },
-      { label: "₹1000 - ₹2000" },
-      { label: "₹2000 & Above" },
     ],
   },
   {
