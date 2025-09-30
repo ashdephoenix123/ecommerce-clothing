@@ -1,81 +1,80 @@
 .allCards {
-    flex-grow: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 20rem);
-    grid-gap: 2rem;
-    justify-content: center;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 2rem;
 
-    @media only screen and (max-width: 467px) {
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-        object-fit: contain;
-    }
+  @media only screen and (max-width: 467px) {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    object-fit: contain;
+  }
 }
 
 .productTitle {
-    text-align: center;
-    font-size: 2rem;
-    font-style: italic;
-    margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2rem;
+  font-style: italic;
+  margin-bottom: 2rem;
 }
 
 .card {
-    box-shadow: 0 .5rem 1rem 0 rgba(0, 0, 0, 0.2);
-    transition: box-shadow .2s ease-in-out;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
 
-    &Image {
-        width: 100%;
-        min-height: 20rem;
-        max-height: 20rem;
-        object-fit: cover;
-        object-position: top;
+  &Image {
+    width: 100%;
+    min-height: 20rem;
+    max-height: 20rem;
+    object-fit: cover;
+    object-position: top;
 
-        @media only screen and (max-width: 421px) {
-            object-fit: contain;
-        }
+    @media only screen and (max-width: 421px) {
+      object-fit: contain;
+    }
+  }
+
+  &Content {
+    padding: 1rem;
+
+    h3 {
+      color: var(--color-grey1);
+      font-size: 1.2rem;
     }
 
-    &Content {
-        padding: 1rem;
-
-        h3 {
-            color: var(--color-grey1);
-            font-size: 1.2rem;
-        }
-
-        h2 {
-            font-weight: bold;
-        }
-
-        .price {
-            color: var(--color-grey3);
-        }
-
-        .size {
-            color: var(--color-grey3);
-            font-size: 1.2rem;
-            border: 1px solid var(--color-grey1);
-            display: inline-block;
-            padding: .5rem .75rem;
-            margin: .25rem .25rem .25rem 0;
-        }
+    h2 {
+      font-weight: bold;
     }
 
-    &:hover {
-        box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+    .price {
+      color: var(--color-grey3);
     }
+
+    .size {
+      color: var(--color-grey3);
+      font-size: 1.2rem;
+      border: 1px solid var(--color-grey1);
+      display: inline-block;
+      padding: 0.5rem 0.75rem;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+  }
 }
 
 .test {
-    display: flex;
+  display: flex;
 }
 
 .left {
-    background-color: orangered;
-    padding: 1rem 2rem;
-    flex: 0 0 30rem;
-    margin-right: 1rem;
+  background-color: orangered;
+  padding: 1rem 2rem;
+  flex: 0 0 30rem;
+  margin-right: 1rem;
 
-    @media only screen and (max-width: 811px) {
-        display: none;
-    }
+  @media only screen and (max-width: 811px) {
+    display: none;
+  }
 }

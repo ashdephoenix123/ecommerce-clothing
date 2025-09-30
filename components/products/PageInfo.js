@@ -6,7 +6,9 @@ const PageInfo = () => {
   return (
     <section>
       <BasicBreadcrumbs />
-      <Typography>Mens Topwear 1001010010 Items</Typography>
+      <Typography display="flex" alignItems="center">
+        <Typography fontWeight={600}>Mens Topwear</Typography>: 1001010010 Items
+      </Typography>
     </section>
   );
 };

@@ -10,19 +10,21 @@ function handleClick(event) {
 
 export default function BasicBreadcrumbs() {
   return (
-    <div role="presentation" onClick={handleClick}>
+    <div role="presentation" onClick={handleClick} className="mb-6">
       <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/">
-          MUI
+          Home
         </Link>
         <Link
           underline="hover"
           color="inherit"
           href="/material-ui/getting-started/installation/"
         >
-          Core
+          Clothing
         </Link>
-        <Typography sx={{ color: "text.primary" }}>Breadcrumbs</Typography>
+        <Typography sx={{ color: "text.primary", fontWeight: 600 }}>
+          Mens Tshirts
+        </Typography>
       </Breadcrumbs>
     </div>
   );
