@@ -21,7 +21,8 @@ const Footer = () => {
               />
             </Link>
             <p className={styles.footer__links1}>
-              Entrusting everyone by delivering happiness along with the orders.{" "}
+              Entrusting everyone by delivering happiness along with the
+              orders.{" "}
             </p>
           </div>
           <div className={styles.footer__links1}>
@@ -30,27 +31,27 @@ const Footer = () => {
               <li
                 className={`${styles.footer__linksLists} ${styles.adjusting}`}
               >
-                <Link href="/tshirts">T-Shirts</Link>
+                <Link href="/products/tshirts">T-Shirts</Link>
               </li>
               <li
                 className={`${styles.footer__linksLists} ${styles.adjusting}`}
               >
-                <Link href="/sweatshirts">Sweatshirts</Link>
+                <Link href="/products/sweatshirts">Sweatshirts</Link>
               </li>
               <li
                 className={`${styles.footer__linksLists} ${styles.adjusting}`}
               >
-                <Link href="/hoodies">Hoodies</Link>
+                <Link href="/products/hoodies">Hoodies</Link>
               </li>
               <li
                 className={`${styles.footer__linksLists} ${styles.adjusting}`}
               >
-                <Link href="/stickers">Stickers</Link>
+                <Link href="/products/stickers">Stickers</Link>
               </li>
               <li
                 className={`${styles.footer__linksLists} ${styles.adjusting}`}
               >
-                <Link href="/mugs">Mugs</Link>
+                <Link href="/products/mugs">Mugs</Link>
               </li>
             </ul>
           </div>
