@@ -121,6 +121,9 @@ const theme = createTheme({
       },
     },
     MuiCheckbox: {
+      defaultProps: {
+        disableRipple: true,
+      },
       styleOverrides: {
         root: ({ theme }) => ({
           padding: "4px 4px 4px 0",
