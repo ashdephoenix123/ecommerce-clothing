@@ -110,8 +110,7 @@ const theme = createTheme({
     MuiCheckbox: {
       styleOverrides: {
         root: ({ theme }) => ({
-          color: theme.palette.primary.dark, // details text size
-          padding: "6px 6px 6px 0",
+          padding: "4px 4px 4px 0",
           "&.Mui-checked": {
             color: theme.palette.primary.main,
           },
@@ -137,6 +136,28 @@ const theme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           fontSize: theme.typography.fontSize * 0.9,
+        }),
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: theme.typography.fontSize * 1.2,
+        }),
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: ({ theme }) => ({
+          fontSize: theme.typography.fontSize * 0.9,
+        }),
+      },
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          paddingBlock: 4,
+          paddingInline: 10,
         }),
       },
     },

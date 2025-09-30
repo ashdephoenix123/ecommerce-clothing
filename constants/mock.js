@@ -135,16 +135,56 @@ export const filtersOption = [
     id: 6,
     label: "Color",
     options: [
-      { label: "Black" },
-      { label: "White" },
-      { label: "Blue" },
-      { label: "Red" },
-      { label: "Green" },
-      { label: "Black" },
-      { label: "White" },
-      { label: "Blue" },
-      { label: "Red" },
-      { label: "Green" },
+      { label: "Black", color: "#000000" },
+      { label: "White", color: "#FFFFFF" },
+      { label: "Blue", color: "#0000FF" },
+      { label: "Red", color: "#FF0000" },
+      { label: "Green", color: "#008000" },
+      { label: "Yellow", color: "#FFFF00" },
+      { label: "Orange", color: "#FFA500" },
+      { label: "Purple", color: "#800080" },
+      { label: "Pink", color: "#FFC0CB" },
+      { label: "Gray", color: "#808080" },
+      { label: "Brown", color: "#A52A2A" },
+      { label: "Cyan", color: "#00FFFF" },
+    ],
+  },
+  {
+    id: 7,
+    label: "Discount",
+    options: [
+      {
+        id: 10,
+        label: "10% and above",
+      },
+      {
+        id: 20,
+        label: "20% and above",
+      },
+      {
+        id: 30,
+        label: "30% and above",
+      },
+      {
+        id: 40,
+        label: "40% and above",
+      },
+      {
+        id: 50,
+        label: "50% and above",
+      },
+      {
+        id: 60,
+        label: "60% and above",
+      },
+      {
+        id: 70,
+        label: "70% and above",
+      },
+      {
+        id: 80,
+        label: "80% and above",
+      },
     ],
   },
 ];

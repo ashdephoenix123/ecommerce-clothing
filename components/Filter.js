@@ -1,25 +1,43 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
-import { FaChevronDown } from "react-icons/fa";
+import { Box, FormGroup, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import CheckBox from "./CheckBox";
+import FilterWrapper from "./FilterWrapper";
 
-const Filter = ({ label, isExpanded, onChange, children }) => {
+const Filter = ({ label, options, type }) => {
+  const theme = useTheme();
+  const colorLabel = (label, color) => (
+    <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
+      <Box
+        sx={{
+          width: theme.typography.fontSize,
+          height: theme.typography.fontSize,
+          backgroundColor: color,
+          borderRadius: 7,
+          borderWidth: "1px",
+          borderColor: theme.palette.grey["300"],
+        }}
+      ></Box>
+      <Typography variant="h6" color="secondary">
+        {label}
+      </Typography>
+    </Box>
+  );
+
   return (
-    <Accordion
-      sx={{ border: "none" }}
-      expanded={isExpanded}
-      onChange={onChange}
-    >
-      <AccordionSummary
-        expandIcon={<FaChevronDown />}
-        aria-controls={label + " content"}
-        id={label + " header"}
-      >
-        <Typography component="span">{label}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>{children}</AccordionDetails>
-    </Accordion>
+    <FilterWrapper label={label}>
+      <FormGroup>
+        {options.map((option) => (
+          <CheckBox
+            key={option.label}
+            label={
+              type !== "color"
+                ? option.label
+                : colorLabel(option.label, option.color)
+            }
+          />
+        ))}
+      </FormGroup>
+    </FilterWrapper>
   );
 };
 
