@@ -1,10 +1,25 @@
-import { Box, FormGroup, Typography } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import CheckBox from "./CheckBox";
+import { useRouter } from "next/router";
+import { IoCheckbox, IoSquareOutline } from "react-icons/io5";
 import FilterWrapper from "./FilterWrapper";
+import { formURL } from "@/utils/helpers";
 
-const Filter = ({ label, options, type }) => {
+const Filter = ({ id, label, options, selected }) => {
   const theme = useTheme();
+  const router = useRouter();
+
+  const handleChange = (optionID) => {
+    const path = formURL(id, optionID, router);
+    router.push(path);
+  };
+
   const colorLabel = (label, color) => (
     <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
       <Box
@@ -26,16 +41,29 @@ const Filter = ({ label, options, type }) => {
   return (
     <FilterWrapper label={label}>
       <FormGroup>
-        {options.map((option) => (
-          <CheckBox
-            key={option.label}
-            label={
-              type !== "color"
-                ? option.label
-                : colorLabel(option.label, option.color)
-            }
-          />
-        ))}
+        {options.map((option) => {
+          return (
+            <FormControlLabel
+              key={option.id}
+              labelPlacement="start"
+              control={
+                <Checkbox
+                  size="large"
+                  checked={Boolean(selected.includes(option.id))}
+                  onChange={() => handleChange(option.id)}
+                  icon={<IoSquareOutline />}
+                  checkedIcon={<IoCheckbox />}
+                />
+              }
+              label={
+                id !== "colors"
+                  ? option.label
+                  : colorLabel(option.label, option.color)
+              }
+              sx={{ flexDirection: "row", ml: 0 }}
+            />
+          );
+        })}
       </FormGroup>
     </FilterWrapper>
   );

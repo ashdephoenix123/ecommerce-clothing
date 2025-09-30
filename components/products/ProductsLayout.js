@@ -4,23 +4,28 @@ import styles from "../../styles/tshirts.module.scss";
 import Filters from "../Filters";
 import ProductCard from "../ProductCard";
 import SortBy from "./SortBy";
+import { useSelector } from "react-redux";
 
 let products = productsData;
 
 const ProductsLayout = () => {
+  const hasFilters = useSelector((state) => state.products.hasFilters);
+
   return (
     <section className="grid grid-cols-5 gap-12">
       <div className="flex justify-between items-center border-b">
         <Typography variant="h3" textTransform="uppercase">
           Filters
         </Typography>
-        <Button
-          disableRipple
-          variant="text"
-          sx={{ textTransform: "uppercase" }}
-        >
-          clear all
-        </Button>
+        {hasFilters && (
+          <Button
+            disableRipple
+            variant="text"
+            sx={{ textTransform: "uppercase" }}
+          >
+            clear all
+          </Button>
+        )}
       </div>
       <div className="col-span-4 justify-items-end border-b pb-4">
         <SortBy />

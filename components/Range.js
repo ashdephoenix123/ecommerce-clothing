@@ -6,20 +6,38 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-const Range = () => {
+const Range = ({ id, fromPrice, toPrice }) => {
   const MIN = 0;
   const MAX = 1000;
-  const [value, setValue] = useState([0, 400]);
+  const [value, setValue] = useState([fromPrice, toPrice]);
+  const router = useRouter();
+
+  useEffect(() => {
+    setValue([fromPrice, toPrice]);
+  }, [fromPrice, toPrice]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const updateFilter = () => {
+    const { slug, ...restQuery } = router.query;
+
+    const params = new URLSearchParams(restQuery || {});
+    params.set("fromPrice", value[0]);
+    params.set("toPrice", value[1]);
+
+    router.push({
+      pathname: `/products/${slug || ""}`,
+      query: Object.fromEntries(params.entries()),
+    });
+  };
+
   const handlePriceUpdate = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setValue((prev) => {
       const minVal = name === "min" ? value : prev[0];
       const maxVal = name === "max" ? value : prev[1];
@@ -70,7 +88,7 @@ const Range = () => {
           </Typography>
         </Box>
       </Box>
-      <Button fullWidth variant="contained">
+      <Button fullWidth variant="contained" onClick={updateFilter}>
         Apply
       </Button>
     </Box>

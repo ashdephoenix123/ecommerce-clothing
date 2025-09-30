@@ -1,10 +1,10 @@
 import FilterWrapper from "./FilterWrapper";
 import Range from "./Range";
 
-const PriceFilter = ({ label }) => {
+const PriceFilter = ({ label, ...props }) => {
   return (
     <FilterWrapper label={label}>
-      <Range />
+      <Range {...props} />
     </FilterWrapper>
   );
 };
