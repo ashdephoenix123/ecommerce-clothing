@@ -1,34 +1,10 @@
 import { filtersOption } from "@/constants/mock";
 import { Stack } from "@mui/material";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import Filter from "./Filter";
 import FilterRadio from "./FilterRadio";
 import PriceFilter from "./PriceFilter";
 
-const Filters = () => {
-  const router = useRouter();
-  const { query } = router;
-  const [filters, setFilters] = useState({
-    categories: [],
-    brands: [],
-    colors: [],
-    discount: null,
-    fromPrice: "0",
-    toPrice: "0",
-  });
-
-  useEffect(() => {
-    setFilters({
-      categories: query?.categories?.split(",") || [],
-      brands: query?.brands?.split(",") || [],
-      colors: query?.colors?.split(",") || [],
-      discount: query?.discount || null,
-      fromPrice: query?.fromPrice || "0",
-      toPrice: query?.toPrice || "",
-    });
-  }, [query]);
-
+const Filters = ({ filters }) => {
   return (
     <Stack gap={2}>
       <Filter

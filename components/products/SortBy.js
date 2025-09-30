@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 export default function SortBy() {
   const router = useRouter();
   const { query } = router;
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(sortoptions[0].id);
 
   useEffect(() => {
     if (query.sortby) {
