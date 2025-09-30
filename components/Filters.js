@@ -1,10 +1,10 @@
 import { filtersOption } from "@/constants/mock";
 import { Stack } from "@mui/material";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Filter from "./Filter";
 import FilterRadio from "./FilterRadio";
 import PriceFilter from "./PriceFilter";
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
 
 const Filters = () => {
   const router = useRouter();

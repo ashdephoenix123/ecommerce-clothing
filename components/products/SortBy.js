@@ -1,39 +1,35 @@
+import { sortoptions } from "@/constants/constants";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import React, { useState } from "react";
-
-const sortoptions = [
-  {
-    id: "recommended",
-    label: "Recommended",
-  },
-  {
-    id: "whats-new",
-    label: "What's New",
-  },
-  {
-    id: "high-to-low",
-    label: "Price: High to Low",
-  },
-  {
-    id: "low-to-high",
-    label: "Price: Low to High",
-  },
-  {
-    id: "rating",
-    label: "Customer Rating",
-  },
-];
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function SortBy() {
-  const [value, setValue] = useState(sortoptions[0].id);
+  const router = useRouter();
+  const { query } = router;
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    if (query.sortby) {
+      setValue(query?.sortby || sortoptions[0].id);
+    }
+  }, [query]);
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    const newValue = event.target.value;
+    setValue(newValue);
+
+    const { slug, ...restQuery } = query;
+    const params = new URLSearchParams(restQuery || {});
+
+    params.set("sortby", newValue);
+    router.push({
+      pathname: `/products/${slug || ""}`,
+      query: Object.fromEntries(params.entries()),
+    });
   };
 
   return (

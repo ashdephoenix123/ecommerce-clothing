@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 const Range = ({ id, fromPrice, toPrice }) => {
   const MIN = 0;
-  const MAX = 1000;
+  const MAX = 10000;
   const [value, setValue] = useState([fromPrice, toPrice]);
   const router = useRouter();
 
