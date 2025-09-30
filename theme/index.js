@@ -47,6 +47,19 @@ const theme = createTheme({
             backgroundColor: theme.palette.primary.main,
           },
         }),
+        text: ({ theme }) => ({
+          fontSize: theme.typography.fontSize * 0.8,
+          fontWeight: 600,
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
+          "&.Mui-focusVisible": {
+            backgroundColor: "transparent",
+          },
+          "&:active": {
+            backgroundColor: "transparent",
+          },
+        }),
       },
     },
     MuiTextField: {

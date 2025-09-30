@@ -10,15 +10,19 @@ let products = productsData;
 const ProductsLayout = () => {
   return (
     <section className="grid grid-cols-5 gap-12">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center border-b">
         <Typography variant="h3" textTransform="uppercase">
           Filters
         </Typography>
-        <Button variant="text" sx={{ textTransform: "uppercase" }}>
+        <Button
+          disableRipple
+          variant="text"
+          sx={{ textTransform: "uppercase" }}
+        >
           clear all
         </Button>
       </div>
-      <div className="col-span-4 justify-items-end">
+      <div className="col-span-4 justify-items-end border-b pb-4">
         <SortBy />
       </div>
 
@@ -34,9 +38,9 @@ const ProductsLayout = () => {
                 try again later.
               </p>
             )}
-            {Object.keys(products).map((item) => {
-              return <ProductCard key={item.id} product={products[item]} />;
-            })}
+            {Object.keys(products).map((item) => (
+              <ProductCard key={item} product={products[item]} />
+            ))}
           </div>
         </div>
       </div>

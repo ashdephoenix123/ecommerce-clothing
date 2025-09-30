@@ -30,7 +30,6 @@ const sortoptions = [
 ];
 
 export default function SortBy() {
-  const [age, setAge] = useState("");
   const [value, setValue] = useState(sortoptions[0].id);
 
   const handleChange = (event) => {

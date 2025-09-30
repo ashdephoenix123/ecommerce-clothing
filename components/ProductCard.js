@@ -3,11 +3,7 @@ import styles from "../styles/tshirts.module.scss";
 
 const ProductCard = ({ product }) => {
   return (
-    <Link
-      key={product._id}
-      href={`/product/${product.productId}`}
-      className="flex-1"
-    >
+    <Link href={`/product/${product.productId}`} className="flex-1">
       <div className={`${styles.card} h-full`}>
         <div className={styles.cardImageDiv}>
           <img

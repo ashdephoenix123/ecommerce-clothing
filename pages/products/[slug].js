@@ -3,7 +3,7 @@ import ProductsLayout from "@/components/products/ProductsLayout";
 
 const Product = () => {
   return (
-    <section className="p-6">
+    <section className="p-10">
       <PageInfo />
       <ProductsLayout />
     </section>

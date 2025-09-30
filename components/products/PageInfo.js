@@ -4,10 +4,10 @@ import { Typography } from "@mui/material";
 
 const PageInfo = () => {
   return (
-    <section>
+    <section className="mb-4">
       <BasicBreadcrumbs />
-      <Typography display="flex" alignItems="center">
-        <Typography fontWeight={600}>Mens Topwear</Typography>: 1001010010 Items
+      <Typography display="flex" alignItems="center" component="div">
+        <Typography fontWeight={600}>Mens Topwear</Typography>: 234183 Items
       </Typography>
     </section>
   );
