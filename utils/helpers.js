@@ -1,21 +1,23 @@
-export const formURL = (id, optionID, router) => {
-  // Copy query without slug
+export const formURL = (id, optionIDs, router) => {
   const { slug, ...restQuery } = router.query;
   const params = new URLSearchParams(restQuery || {});
 
-  // Determine if this filter should be treated as an array
-  const isArrayFilter = id !== "discount"; // discount is string, everything else is array
+  const isArrayFilter = id !== "discount"; // discount = single, everything else = array
 
   if (isArrayFilter) {
-    // Get current selected values for this filter (array)
+    // Handle both single string and array
     let current = params.get(id)?.split(",") || [];
 
-    if (current.includes(optionID)) {
-      // remove if already selected
-      current = current.filter((item) => item !== optionID);
+    if (Array.isArray(optionIDs)) {
+      current = optionIDs; // overwrite with full array selection
     } else {
-      // add if not selected
-      current.push(optionID);
+      // fallback: handle single selection toggle
+      const optionID = optionIDs;
+      if (current.includes(optionID)) {
+        current = current.filter((item) => item !== optionID);
+      } else {
+        current.push(optionID);
+      }
     }
 
     if (current.length > 0) {
@@ -24,17 +26,64 @@ export const formURL = (id, optionID, router) => {
       params.delete(id);
     }
   } else {
-    // Single-value filter (overwrite previous)
-    if (optionID) {
-      params.set(id, optionID);
+    // Single-value filter
+    if (optionIDs) {
+      params.set(id, optionIDs);
     } else {
       params.delete(id);
     }
   }
 
-  // Use object form for dynamic route
   return {
     pathname: `/products/${slug || ""}`,
     query: Object.fromEntries(params.entries()),
+  };
+};
+
+export const groupedBrands = (options, searchTerm = "") => {
+  const grouped = options.reduce((acc, brand) => {
+    const firstLetter = brand.label[0].toUpperCase();
+    if (!acc[firstLetter]) {
+      acc[firstLetter] = [];
+    }
+    acc[firstLetter].push([brand.id, brand.label]);
+    return acc;
+  }, {});
+
+  Object.keys(grouped).forEach((key) => {
+    grouped[key].sort();
+  });
+
+  const sortedgroup = Object.keys(grouped)
+    .sort()
+    .reduce((acc, key) => {
+      acc[key] = grouped[key];
+      return acc;
+    }, {});
+
+  // Apply search filter if searchTerm is provided
+  if (searchTerm.trim()) {
+    const filtered = Object.keys(sortedgroup).reduce((acc, letter) => {
+      const matches = sortedgroup[letter].filter((brand) =>
+        brand[1].toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      if (matches.length > 0) {
+        acc[letter] = matches;
+      }
+      return acc;
+    }, {});
+    return filtered;
+  }
+
+  return sortedgroup;
+};
+
+export const debounce = (callback, delay) => {
+  let timeoutID;
+  return function (...args) {
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      callback(...args);
+    }, delay);
   };
 };
