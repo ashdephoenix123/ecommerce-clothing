@@ -1,9 +1,12 @@
+import { debounce, formURL, groupedBrands } from "@/utils/helpers";
 import {
   Box,
   Checkbox,
+  DialogActions,
   FormControlLabel,
   FormGroup,
   TextField,
+  Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -13,176 +16,60 @@ import * as React from "react";
 import { IoCheckbox, IoSquareOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 
-const groupedBrands = {
-  A: [
-    "Adidas",
-    "Apple",
-    "Asics",
-    "Acer",
-    "Armani",
-    "Allbirds",
-    "Airbnb",
-    "Aldo",
-  ],
-  B: [
-    "BMW",
-    "Bosch",
-    "Balenciaga",
-    "Burberry",
-    "Bose",
-    "Bridgestone",
-    "Bata",
-    "Blackberry",
-    "Benetton",
-    "Birkenstock",
-  ],
-  C: [
-    "Canon",
-    "Coca-Cola",
-    "Columbia",
-    "Crocs",
-    "Casio",
-    "Chevrolet",
-    "Converse",
-    "Calvin Klein",
-    "Coach",
-    "Chanel",
-  ],
-  D: [
-    "Dell",
-    "Dior",
-    "Domino’s",
-    "Disney",
-    "Diesel",
-    "Dropbox",
-    "Dunlop",
-    "Doc Martens",
-  ],
-  E: [
-    "Epson",
-    "Estee Lauder",
-    "eBay",
-    "Ecko",
-    "Etnies",
-    "Eileen Fisher",
-    "Everlane",
-  ],
-  F: [
-    "Fila",
-    "Ford",
-    "Fossil",
-    "Facebook",
-    "Ferrari",
-    "Forever 21",
-    "Funskool",
-    "Fred Perry",
-  ],
-  G: [
-    "Google",
-    "Gucci",
-    "Gap",
-    "Givenchy",
-    "GoPro",
-    "Guess",
-    "General Motors",
-    "GAP Kids",
-    "Giorgio Armani",
-  ],
-  H: [
-    "HP",
-    "H&M",
-    "Hermes",
-    "Honda",
-    "Hilfiger",
-    "Harley-Davidson",
-    "Hugo Boss",
-    "Heineken",
-  ],
-  I: ["Ikea", "Intel", "Instagram", "Indigo", "Issey Miyake", "Icebreaker"],
-  J: [
-    "JBL",
-    "Jaguar",
-    "Jockey",
-    "John Players",
-    "Jack & Jones",
-    "Juicy Couture",
-  ],
-  K: ["Kia", "Kellogg’s", "Kenzo", "Karl Lagerfeld", "Kappa", "Kate Spade"],
-  L: [
-    "Levi’s",
-    "Lacoste",
-    "LG",
-    "Lamborghini",
-    "L’Oréal",
-    "Lululemon",
-    "Louis Vuitton",
-  ],
-  M: [
-    "Microsoft",
-    "Motorola",
-    "Mercedes",
-    "Mango",
-    "Moncler",
-    "Michael Kors",
-    "Montblanc",
-    "McDonald’s",
-  ],
-  N: [
-    "Nike",
-    "Nestle",
-    "Nikon",
-    "Nautica",
-    "Nintendo",
-    "New Balance",
-    "Netflix",
-  ],
-  P: ["Pepsi", "Puma", "Prada", "Philips", "Porsche", "Patagonia", "Pandora"],
-  R: [
-    "Reebok",
-    "Rolex",
-    "Ray-Ban",
-    "Ralph Lauren",
-    "Razer",
-    "Red Bull",
-    "Rado",
-  ],
-  S: [
-    "Samsung",
-    "Sony",
-    "Starbucks",
-    "Swatch",
-    "Supreme",
-    "Skechers",
-    "Shell",
-    "Santoni",
-    "Speedo",
-  ],
-  T: [
-    "Tesla",
-    "Toyota",
-    "Timberland",
-    "Tommy Hilfiger",
-    "Tissot",
-    "Tag Heuer",
-    "TikTok",
-  ],
-  V: [
-    "Volkswagen",
-    "Versace",
-    "Valentino",
-    "Vans",
-    "Volvo",
-    "Victoria’s Secret",
-  ],
-  Z: ["Zara", "Zoom", "Zegna", "Zappos", "Zenith"],
-};
+export default function AllOptions({
+  id,
+  label,
+  open,
+  handleClose,
+  options,
+  selected,
+  router,
+}) {
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [allOptions, setAllOptions] = React.useState(groupedBrands(options));
+  const [userselected, setuserselected] = React.useState(selected || []);
 
-export default function AllOptions({ label, open, handleClose }) {
+  React.useEffect(() => {
+    setuserselected(selected);
+  }, [selected]);
+
+  const debouncedSearch = React.useMemo(() => {
+    return debounce((value) => {
+      setAllOptions(groupedBrands(options, value));
+    }, 300);
+  }, []);
+
+  const handleTextUpdate = (e) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+    debouncedSearch(value);
+  };
+
+  const updateUpserSelection = (brandID) => {
+    setuserselected((prev) => {
+      if (prev.includes(brandID)) {
+        return prev.filter((bid) => bid !== brandID);
+      }
+      return [...prev, brandID];
+    });
+  };
+
+  const applyChanges = () => {
+    const path = formURL(id, userselected, router);
+    router.push(path);
+    handleClose();
+  };
+
+  const savewithoutchanges = () => {
+    setuserselected(selected);
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={savewithoutchanges}
         fullWidth
         maxWidth="md"
         aria-labelledby="alert-dialog-title"
@@ -198,11 +85,13 @@ export default function AllOptions({ label, open, handleClose }) {
               size="small"
               variant="filled"
               placeholder={`Search ${label}`}
+              value={searchTerm}
+              onChange={handleTextUpdate}
             />
             <Button
               sx={{ p: 0, justifyContent: "end" }}
               disableRipple
-              onClick={handleClose}
+              onClick={savewithoutchanges}
             >
               <RxCross1 size={20} />
             </Button>
@@ -212,36 +101,48 @@ export default function AllOptions({ label, open, handleClose }) {
           <Box
             sx={{
               mt: 2,
-              columnCount: { xs: 2, md: 4 }, // responsive column count
+              columnCount: { xs: 2, md: 4 },
               columnGap: 2,
               maxHeight: 500,
               overflowY: "auto",
             }}
           >
-            {Object.keys(groupedBrands).map((letter) => (
-              <div key={letter}>
-                <h2 className="text-lg font-bold mb-2">{letter}</h2>
+            {Object.keys(allOptions).map((letter) => (
+              <Box key={letter} sx={{ mb: 2 }}>
+                <Typography variant="h4" mb={1}>
+                  {letter}
+                </Typography>
                 <div className="grid grid-cols-1 gap-2">
                   <FormGroup>
-                    {groupedBrands[letter].map((brand, index) => (
+                    {allOptions[letter].map((brand, index) => (
                       <FormControlLabel
                         key={index}
                         control={
                           <Checkbox
                             icon={<IoSquareOutline />}
                             checkedIcon={<IoCheckbox />}
+                            checked={Boolean(userselected.includes(brand[0]))}
+                            onChange={() => updateUpserSelection(brand[0])}
                           />
                         }
-                        label={brand}
+                        label={brand[1]}
                         sx={{ margin: 0 }}
                       />
                     ))}
                   </FormGroup>
                 </div>
-              </div>
+              </Box>
             ))}
           </Box>
         </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={savewithoutchanges}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={applyChanges} autoFocus>
+            Apply
+          </Button>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );

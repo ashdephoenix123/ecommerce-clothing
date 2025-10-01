@@ -1,3 +1,4 @@
+import { formURL } from "@/utils/helpers";
 import {
   Box,
   Button,
@@ -8,11 +9,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
-import { IoCheckbox, IoSquareOutline } from "react-icons/io5";
-import FilterWrapper from "./FilterWrapper";
-import { formURL } from "@/utils/helpers";
-import AllOptions from "./AllOptions";
 import { useState } from "react";
+import { IoCheckbox, IoSquareOutline } from "react-icons/io5";
+import AllOptions from "./AllOptions";
+import FilterWrapper from "./FilterWrapper";
 
 const Filter = ({ id, label, options, selected }) => {
   const theme = useTheme();
@@ -54,7 +54,7 @@ const Filter = ({ id, label, options, selected }) => {
     <>
       <FilterWrapper label={label}>
         <FormGroup>
-          {options.map((option) => {
+          {options.slice(0, 8).map((option) => {
             return (
               <FormControlLabel
                 key={option.id}
@@ -87,7 +87,16 @@ const Filter = ({ id, label, options, selected }) => {
       >
         +100 items
       </Button>
-      <AllOptions label={label} open={open} handleClose={handleClose} />
+      <AllOptions
+        id={id}
+        label={label}
+        open={open}
+        handleClose={handleClose}
+        options={options}
+        selected={selected}
+        handleChange={handleChange}
+        router={router}
+      />
     </>
   );
 };
