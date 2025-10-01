@@ -18,7 +18,7 @@ const ProductsLayout = () => {
     colors: [],
     discount: null,
     fromPrice: "0",
-    toPrice: "0",
+    toPrice: "1000",
   };
   const [filters, setFilters] = useState(initialFilterState);
 
