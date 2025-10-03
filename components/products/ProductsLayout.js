@@ -33,12 +33,13 @@ const ProductsLayout = () => {
 
   useEffect(() => {
     setFilters({
-      categories: query?.categories?.split(",") || [],
-      brands: query?.brands?.split(",") || [],
-      colors: query?.colors?.split(",") || [],
-      discount: query?.discount || null,
-      fromPrice: query?.fromPrice || "0",
-      toPrice: query?.toPrice || "",
+      categories:
+        query?.categories?.split(",") || initialFilterState.categories,
+      brands: query?.brands?.split(",") || initialFilterState.brands,
+      colors: query?.colors?.split(",") || initialFilterState.colors,
+      discount: query?.discount || initialFilterState.discount,
+      fromPrice: query?.fromPrice || initialFilterState.fromPrice,
+      toPrice: query?.toPrice || initialFilterState.toPrice,
     });
   }, [query]);
 
