@@ -14,6 +14,7 @@ const VariantSchema = new mongoose.Schema(
 const CommoditySchema = new mongoose.Schema(
   {
     sku: { type: String, unique: true, sparse: true, index: true },
+    slug: { type: String, required: true },
     name: { type: String, required: true, trim: true },
     description: { type: String },
     category: { type: String },

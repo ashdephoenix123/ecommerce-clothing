@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
 
   return (
-    <Link href={`/product/${product.sku}`} className={`${styles.card} h-full`}>
+    <Link href={`/product/${product.slug}`} className={`${styles.card} h-full`}>
       <div className={styles.cardImageDiv}>
         <Image
           className={styles.cardImage}
