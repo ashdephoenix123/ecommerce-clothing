@@ -11,7 +11,10 @@ const ProductCard = ({ product }) => {
       <div className={styles.cardImageDiv}>
         <Image
           className={styles.cardImage}
-          src={selectedVariant.images[0]}
+          // src={selectedVariant.images[0]}
+          src={
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oXzfDkZkBH6Sr0V5gxEupg3FBZQnnC_UQA&usqp=CAU"
+          }
           width={640}
           height={320}
           alt={product.name + "Image"}
@@ -30,11 +33,13 @@ const ProductCard = ({ product }) => {
 
         <div className="flex flex-wrap gap-1 mb-2">
           {product.variants.map((variant) => {
-            return (
-              <div key={variant.size} className={styles.size}>
-                {variant.size}
-              </div>
-            );
+            if (variant.size) {
+              return (
+                <div key={variant.size} className={styles.size}>
+                  {variant.size}
+                </div>
+              );
+            } else return <></>;
           })}
         </div>
 

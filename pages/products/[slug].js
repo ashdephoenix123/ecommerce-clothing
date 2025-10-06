@@ -1,8 +1,6 @@
 import PageInfo from "@/components/products/PageInfo";
 import ProductsLayout from "@/components/products/ProductsLayout";
-import { allproducts } from "@/constants/mock";
-// import connectDB from "@/middleware/conn";
-// import Commodity from "@/models/Commodity";
+import axios from "axios";
 
 const Product = ({ products, error }) => {
   if (error) {
@@ -32,13 +30,12 @@ export async function getServerSideProps(context) {
   };
 
   try {
-    // await connectDB();
-    // const alldata = await Commodity.find({}).lean();
-    // const parseddata = JSON.parse(JSON.stringify(alldata)),
-
+    const allproducts = await axios.get(
+      `http://localhost:3000/api/getCommodities`
+    );
     return {
       props: {
-        products: allproducts,
+        products: allproducts.data,
       },
     };
   } catch (error) {
