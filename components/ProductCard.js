@@ -5,16 +5,15 @@ import styles from "../styles/tshirts.module.scss";
 
 const ProductCard = ({ product }) => {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  // const href = `/product/${product.slug}`;
+  const href = `/product/boston-premium-tshirt`;
 
   return (
-    <Link href={`/product/${product.slug}`} className={`${styles.card} h-full`}>
+    <Link href={href} className={`${styles.card} h-full`}>
       <div className={styles.cardImageDiv}>
         <Image
           className={styles.cardImage}
-          // src={selectedVariant.images[0]}
-          src={
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oXzfDkZkBH6Sr0V5gxEupg3FBZQnnC_UQA&usqp=CAU"
-          }
+          src={selectedVariant.images[0]}
           width={640}
           height={320}
           alt={product.name + "Image"}
