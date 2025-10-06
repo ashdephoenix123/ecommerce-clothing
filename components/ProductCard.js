@@ -5,8 +5,7 @@ import styles from "../styles/tshirts.module.scss";
 
 const ProductCard = ({ product }) => {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
-  // const href = `/product/${product.slug}`;
-  const href = `/product/boston-premium-tshirt`;
+  const href = `/product/${product.slug}`;
 
   return (
     <Link href={href} className={`${styles.card} h-full`}>
