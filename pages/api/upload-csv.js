@@ -46,6 +46,7 @@ export default async function handler(req, res) {
       const docs = results.map((row) => {
         return {
           sku: row.sku,
+          slug: row.slug,
           name: row.name,
           description: row.description,
           category: row.category || "",
