@@ -84,7 +84,7 @@ const Range = ({ id, fromPrice, toPrice }) => {
             {MIN} min
           </Typography>
           <Typography variant="body2" sx={{ cursor: "pointer" }}>
-            {MAX} max
+            {MAX}+ max
           </Typography>
         </Box>
       </Box>
