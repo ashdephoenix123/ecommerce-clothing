@@ -291,3 +291,82 @@ export const filtersOption = [
     ],
   },
 ];
+
+export const allproducts = [
+  {
+    _id: "68de0975a0508941cb98ef2a",
+    sku: "SPK001",
+    name: "Bluetooth Speaker",
+    description: "Portable wireless speaker with deep bass",
+    category: "electronics",
+    variants: [
+      {
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oXzfDkZkBH6Sr0V5gxEupg3FBZQnnC_UQA&usqp=CAU",
+          "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQT7jxkF--Rdsj4BlZq0mZdaCrxCLLOdh36jQNhpp0HZaraldqr-HT_Qy0JDhte5MTPinuv1LVBE2lResjDx3rD96e9bXh0tpfqTyGz9E8C8CO-q1wNiA-1n3DllZ-DMDhWTQ&usqp=CAc",
+        ],
+        stock: 100,
+        price: 500,
+        color: "red",
+        size: "XS",
+      },
+      {
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oXzfDkZkBH6Sr0V5gxEupg3FBZQnnC_UQA&usqp=CAU",
+          "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQT7jxkF--Rdsj4BlZq0mZdaCrxCLLOdh36jQNhpp0HZaraldqr-HT_Qy0JDhte5MTPinuv1LVBE2lResjDx3rD96e9bXh0tpfqTyGz9E8C8CO-q1wNiA-1n3DllZ-DMDhWTQ&usqp=CAc",
+        ],
+        stock: 200,
+        price: 200,
+        color: "blue",
+        size: "M",
+      },
+    ],
+    __v: 0,
+    createdAt: "2025-10-02T05:11:17.394Z",
+    updatedAt: "2025-10-02T05:11:17.394Z",
+  },
+  {
+    _id: "68de0975a0508941cb98ef2a",
+    sku: "SPK001",
+    name: "T Shirt",
+    description: "Portable tshirt speaker with deep bass",
+    category: "electronics",
+    variants: [
+      {
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oXzfDkZkBH6Sr0V5gxEupg3FBZQnnC_UQA&usqp=CAU",
+          "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQJuNPyRKHnK0ymROjojvSjNFSgsmJTtX-lE8MK40v3gC8WVOJFdSFGJCpgRnPsclXHnQaLbXjsGe5yhW71fQIBzCaoHW5fAGZ11979BOdCoILLf1ZvsqGt&usqp=CAc",
+        ],
+        stock: 100,
+        price: 500,
+        color: "red",
+        size: "S",
+      },
+    ],
+    __v: 0,
+    createdAt: "2025-10-02T05:11:17.394Z",
+    updatedAt: "2025-10-02T05:11:17.394Z",
+  },
+  {
+    _id: "68de0975a0508941cb98ef2a",
+    sku: "SPK001",
+    name: "T Shirt",
+    description: "Portable tshirt speaker with deep bass",
+    category: "electronics",
+    variants: [
+      {
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oXzfDkZkBH6Sr0V5gxEupg3FBZQnnC_UQA&usqp=CAU",
+          "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQT7jxkF--Rdsj4BlZq0mZdaCrxCLLOdh36jQNhpp0HZaraldqr-HT_Qy0JDhte5MTPinuv1LVBE2lResjDx3rD96e9bXh0tpfqTyGz9E8C8CO-q1wNiA-1n3DllZ-DMDhWTQ&usqp=CAc",
+        ],
+        stock: 100,
+        price: 500,
+        color: "red",
+        size: "M",
+      },
+    ],
+    __v: 0,
+    createdAt: "2025-10-02T05:11:17.394Z",
+    updatedAt: "2025-10-02T05:11:17.394Z",
+  },
+];

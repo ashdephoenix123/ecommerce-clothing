@@ -1,15 +1,11 @@
-import { productsData } from "@/constants/mock";
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import styles from "../../styles/tshirts.module.scss";
+import { useEffect, useState } from "react";
 import Filters from "../Filters";
 import ProductCard from "../ProductCard";
 import SortBy from "./SortBy";
-import { useEffect, useState } from "react";
 
-let products = productsData;
-
-const ProductsLayout = () => {
+const ProductsLayout = ({ products }) => {
   const router = useRouter();
   const { query } = router;
   const initialFilterState = {
@@ -67,20 +63,16 @@ const ProductsLayout = () => {
       <div className="shrink-0 hidden lg:block">
         <Filters filters={filters} />
       </div>
-      <div className="flex-1 col-span-4">
-        <div className={styles.test}>
-          <div className={styles.allCards}>
-            {Object.keys(products).length === 0 && (
-              <p className="flex justify-center items-center italic">
-                No {title} to display Or they are currently Out of Stock. Please
-                try again later.
-              </p>
-            )}
-            {Object.keys(products).map((item) => (
-              <ProductCard key={item} product={products[item]} />
-            ))}
-          </div>
-        </div>
+      <div className="flex-1 col-span-5 lg:col-span-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 self-start">
+        {products.length === 0 && (
+          <p className="flex justify-center items-center italic">
+            No {title} to display Or they are currently Out of Stock. Please try
+            again later.
+          </p>
+        )}
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </section>
   );

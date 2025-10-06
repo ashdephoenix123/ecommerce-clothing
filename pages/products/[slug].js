@@ -1,11 +1,18 @@
 import PageInfo from "@/components/products/PageInfo";
 import ProductsLayout from "@/components/products/ProductsLayout";
+import { allproducts } from "@/constants/mock";
+// import connectDB from "@/middleware/conn";
+// import Commodity from "@/models/Commodity";
 
-const Product = ({ data }) => {
+const Product = ({ products, error }) => {
+  if (error) {
+    return <section className="error">Failed to load data!</section>;
+  }
+
   return (
     <section className="p-10">
       <PageInfo />
-      <ProductsLayout />
+      <ProductsLayout products={products} />
     </section>
   );
 };
@@ -24,11 +31,22 @@ export async function getServerSideProps(context) {
     sortby: query?.sortby || "recommended",
   };
 
-  // Make an API call with these filters
+  try {
+    // await connectDB();
+    // const alldata = await Commodity.find({}).lean();
+    // const parseddata = JSON.parse(JSON.stringify(alldata)),
 
-  return {
-    props: {
-      data: [],
-    },
-  };
+    return {
+      props: {
+        products: allproducts,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        error: "Failed!",
+      },
+    };
+  }
 }
