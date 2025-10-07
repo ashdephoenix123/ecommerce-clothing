@@ -171,9 +171,19 @@ const theme = createTheme({
     },
     MuiRadio: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: () => ({
           paddingBlock: 4,
           paddingInline: 10,
+        }),
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: theme.typography.fontSize,
+        }),
+        icon: ({ theme }) => ({
+          fontSize: theme.typography.fontSize * 1.2,
         }),
       },
     },

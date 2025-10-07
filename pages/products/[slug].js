@@ -1,7 +1,7 @@
 import api from "@/axios/instance";
 import PageInfo from "@/components/products/PageInfo";
 import ProductsLayout from "@/components/products/ProductsLayout";
-import axios from "axios";
+import { Pagination, Stack } from "@mui/material";
 
 const Product = ({ products, error }) => {
   if (error) {
@@ -12,6 +12,9 @@ const Product = ({ products, error }) => {
     <section className="p-10">
       <PageInfo />
       <ProductsLayout products={products} />
+      <Stack direction="row" justifyContent="center" sx={{ my: 8 }}>
+        <Pagination count={10} color="primary" />
+      </Stack>
     </section>
   );
 };
