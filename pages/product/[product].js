@@ -1,3 +1,4 @@
+import api from "@/axios/instance";
 import connectDB from "@/middleware/conn";
 import ProductModel from "@/models/Product";
 import styles from "@/styles/product.module.scss";
@@ -369,9 +370,8 @@ const Product = ({
 export async function getServerSideProps(context) {
   let error = null;
   await connectDB();
-  const productdetails = await axios.get(
-    `http://localhost:3000/api/getCommodity?slug=${context.query.product}`
-  );
+  const slug = context.query.product;
+  const productdetails = await api.get(`/getCommodity?slug=${slug}`);
   const findProduct = await ProductModel.findOne({
     productId: "boston-premium-tshirt",
   });

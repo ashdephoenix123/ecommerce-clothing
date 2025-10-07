@@ -1,3 +1,4 @@
+import api from "@/axios/instance";
 import PageInfo from "@/components/products/PageInfo";
 import ProductsLayout from "@/components/products/ProductsLayout";
 import axios from "axios";
@@ -30,9 +31,7 @@ export async function getServerSideProps(context) {
   };
 
   try {
-    const allproducts = await axios.get(
-      `http://localhost:3000/api/getCommodities`
-    );
+    const allproducts = await api.get(`/getCommodities`);
     return {
       props: {
         products: allproducts.data,
