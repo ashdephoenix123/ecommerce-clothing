@@ -237,38 +237,39 @@ const Product = ({
                     );
                   })}
                 </div>
-
-                <div className="flex ml-6 items-center">
-                  <span className="mr-3">Size</span>
-                  <div className="relative">
-                    <select
-                      value={size}
-                      onChange={(e) => {
-                        refreshVariant(color, e.target.value);
-                      }}
-                      className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-500 text-xl pl-3 pr-10"
-                    >
-                      {productdetails.variants.map((siz) => (
-                        <option key={siz.size} value={siz.size}>
-                          {siz.size}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-4 h-4"
-                        viewBox="0 0 24 24"
+                {Object.keys(variant).includes("size") && variant?.size && (
+                  <div className="flex ml-6 items-center">
+                    <span className="mr-3">Size</span>
+                    <div className="relative">
+                      <select
+                        value={size}
+                        onChange={(e) => {
+                          refreshVariant(color, e.target.value);
+                        }}
+                        className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-500 text-xl pl-3 pr-10"
                       >
-                        <path d="M6 9l6 6 6-6"></path>
-                      </svg>
-                    </span>
+                        {variant.size.map((siz) => (
+                          <option key={siz} value={siz}>
+                            {siz}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                        <svg
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          className="w-4 h-4"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               <div className="flex items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">

@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const VariantSchema = new mongoose.Schema(
   {
-    size: { type: String }, // optional for non-size products
-    images: [{ type: String }],
+    size: [{ type: String, default: [] }], // optional for non-size products
+    images: [{ type: String, default: [] }],
     color: { type: String },
     stock: { type: Number, default: 0 },
     price: { type: Number, required: true },
