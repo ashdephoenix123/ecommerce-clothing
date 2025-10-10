@@ -6,6 +6,7 @@ import styles from "../styles/tshirts.module.scss";
 const ProductCard = ({ product }) => {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
   const href = `/product/${product.slug}`;
+  const allSizes = product.variants.flatMap((variant) => variant.size);
 
   return (
     <Link href={href} className={`${styles.card} h-full`}>
@@ -29,19 +30,17 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        <div className="flex flex-wrap gap-1 mb-2">
-          {product.variants.map((variant) => {
-            if (variant.size) {
-              return (
-                <div key={variant.size} className={styles.size}>
-                  {variant.size}
-                </div>
-              );
-            } else return <></>;
-          })}
-        </div>
+        {allSizes.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {allSizes.map((variant) => (
+              <div key={variant} className={styles.size}>
+                {variant}
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1 mt-2">
           {product.variants.map((variant) => {
             return (
               <button
