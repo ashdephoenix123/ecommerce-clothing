@@ -2,7 +2,6 @@ import api from "@/axios/instance";
 import connectDB from "@/middleware/conn";
 import ProductModel from "@/models/Product";
 import styles from "@/styles/product.module.scss";
-import axios from "axios";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -18,13 +17,13 @@ const Product = ({
   variants,
   error,
 }) => {
-  console.log(productdetails);
   const router = useRouter();
   const { product } = router.query;
   const [pincode, setPincode] = useState("");
   const [message, setMessage] = useState("");
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [variant, setVariant] = useState(productdetails.variants[0]);
 
   useEffect(() => {
     if (!error) {
@@ -82,10 +81,8 @@ const Product = ({
     }
   };
 
-  const refreshVariant = (newcolor, newsize) => {
-    const varianturl = `/products/${variants[newcolor][newsize]["productId"]}`;
-    // window.location = varianturl
-    router.push(varianturl);
+  const refreshVariant = (newVariant) => {
+    setVariant(newVariant);
   };
 
   if (error) {
@@ -112,17 +109,14 @@ const Product = ({
             <img
               alt="ecommerce"
               className={`lg:w-1/2 w-full h-3/4 sm:w-1/2 object-cover object-top rounded ${styles.fixImage}`}
-              src={findProduct.img}
+              src={variant.images[0]}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 relative">
-              <h2 className="text-md title-font text-gray-500 tracking-widest">
-                {findProduct.category}
+              <h2 className="text-md title-font text-gray-500 tracking-widest capitalize">
+                {productdetails.category}
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                {findProduct.title}{" "}
-                {`(${findProduct.size} / ${findProduct.color
-                  .charAt(0)
-                  .toUpperCase()}${findProduct.color.slice(1)})`}
+                {productdetails.name}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -222,26 +216,24 @@ const Product = ({
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">{findProduct.desc}</p>
+              <p className="leading-relaxed">{productdetails.description}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex items-center">
                   <span className="mr-3">Color</span>
-                  {Object.keys(variants).map((individualColor, index) => {
+                  {productdetails.variants.map((individualVariant, index) => {
                     return (
-                      Object.keys(variants[individualColor]).includes(size) && (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            refreshVariant(individualColor, size);
-                          }}
-                          className={`border-2 ml-1 rounded-full w-6 h-6 focus:outline-none ${
-                            individualColor === color
-                              ? "border-black"
-                              : "border-gray-300"
-                          }`}
-                          style={{ backgroundColor: individualColor }}
-                        ></button>
-                      )
+                      <button
+                        key={index}
+                        onClick={() => {
+                          refreshVariant(individualVariant);
+                        }}
+                        className={`border ml-1 rounded-full w-8 h-8 focus:outline-none ${
+                          individualVariant.color === variant.color
+                            ? "border-black"
+                            : "border-gray-300"
+                        }`}
+                        style={{ backgroundColor: individualVariant.color }}
+                      ></button>
                     );
                   })}
                 </div>
@@ -256,22 +248,11 @@ const Product = ({
                       }}
                       className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-500 text-xl pl-3 pr-10"
                     >
-                      {color && Object.keys(variants[color]).includes("S") && (
-                        <option value={"S"}>S</option>
-                      )}
-                      {color && Object.keys(variants[color]).includes("M") && (
-                        <option value={"M"}>M</option>
-                      )}
-                      {color && Object.keys(variants[color]).includes("L") && (
-                        <option value={"L"}>L</option>
-                      )}
-                      {color && Object.keys(variants[color]).includes("XL") && (
-                        <option value={"XL"}>XL</option>
-                      )}
-                      {color &&
-                        Object.keys(variants[color]).includes("XXL") && (
-                          <option value={"XXL"}>XXL</option>
-                        )}
+                      {productdetails.variants.map((siz) => (
+                        <option key={siz.size} value={siz.size}>
+                          {siz.size}
+                        </option>
+                      ))}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
@@ -291,8 +272,8 @@ const Product = ({
               </div>
               <div className="flex items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  {findProduct.availableQty !== 0 ? (
-                    "₹" + findProduct.price
+                  {variant.stock !== 0 ? (
+                    "₹" + variant.price
                   ) : (
                     <span className="text-red-700 font-semibold">
                       Out of Stock
@@ -352,13 +333,6 @@ const Product = ({
                   Check
                 </button>
               </div>
-              {/* {message === 'Please enter a valid pincode.' && message !== "" && <div className="text-red-600 mt-2 font-semibold">{message}</div>}
-                            {message === 'Sorry! This Pincode is currently unserviceable.' && message !== "" && <div className="text-red-600 mt-2 font-semibold">{message}</div>}
-                            {message === 'Yay! This Pincode is serviceable.' && message !== "" && <div className="text-green-600 mt-2 font-semibold">{message}</div>} */}
-
-              {/* <div className={`p-4 my-4 text-white rounded-lg bg-green-50 dark:bg-gray-600 dark:text-white w-fit checkmark`} role="alert">
-                                <span className="font-medium flex items-center"><img height={30} width={30} src="/checkmark.png" alt="checkmark" className='mr-2' />Added to cart!</span>
-                            </div> */}
             </div>
           </div>
         </div>
@@ -397,7 +371,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       error: error,
-      productdetails: productdetails.data,
+      productdetails: productdetails.data[0],
       findProduct: JSON.parse(JSON.stringify(findProduct)),
       variants: JSON.parse(JSON.stringify(colorsCollection)),
     },
