@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import styles from "../styles/Navbar.module.scss";
 import Cart from "./Navbar/Cart";
 import Hamburger from "./Navbar/Hamburger";
@@ -16,10 +15,7 @@ const Navbar = ({
   removeItem,
   subtotal,
   usertoken,
-  logout,
 }) => {
-  const router = useRouter();
-
   return (
     <section className="relative z-10">
       <nav className={styles.nav}>
@@ -45,7 +41,14 @@ const Navbar = ({
         <NavbarList />
         <SearchBar />
         <NavbarMenu />
-        <Cart cart={cart} subtotal={subtotal} clearCart={clearCart} />
+        <Cart
+          cart={cart}
+          subtotal={subtotal}
+          clearCart={clearCart}
+          addToCart={addToCart}
+          updateCartItem={updateCartItem}
+          removeItem={removeItem}
+        />
       </nav>
     </section>
   );

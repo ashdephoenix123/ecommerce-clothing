@@ -1,13 +1,19 @@
 import Link from "next/link";
+import { useRef } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsFillBagFill } from "react-icons/bs";
 import { HiMinusCircle, HiPlusCircle } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import styles from "../../styles/Navbar.module.scss";
-import { useRef } from "react";
 
-const Cart = ({ cart, subtotal, clearCart }) => {
-  const checkboxRef = useRef();
+const Cart = ({
+  cart,
+  subtotal,
+  clearCart,
+  addToCart,
+  updateCartItem,
+  removeItem,
+}) => {
   const cartCheckboxRef = useRef();
 
   function unCheck() {
@@ -15,6 +21,32 @@ const Cart = ({ cart, subtotal, clearCart }) => {
       cartCheckboxRef.current.checked = false;
     }
   }
+
+  const decreaseItemQuantity = (item) => {
+    updateCartItem(
+      item,
+      cart[item].quantity,
+      cart[item].price,
+      cart[item].name,
+      cart[item].size,
+      cart[item].variant
+    );
+  };
+
+  const increaseItemQuantity = (item) => {
+    addToCart(
+      item,
+      cart[item].quantity,
+      cart[item].price,
+      cart[item].name,
+      cart[item].size,
+      cart[item].variant
+    );
+  };
+
+  const removeItemFromCart = (item) => {
+    removeItem(item);
+  };
 
   return (
     <div className={styles.cart}>
@@ -43,51 +75,29 @@ const Cart = ({ cart, subtotal, clearCart }) => {
               <li className="text-2xl mx-auto">Uh oh! Your Cart is Empty!</li>
             )}
             {Object.keys(cart).map((item, index) => {
+              let slno = index + 1;
+              let productName =
+                cart[item].name +
+                " - (" +
+                cart[item].size +
+                " / " +
+                cart[item].variant +
+                ")";
               return (
                 <li key={item}>
-                  {index +
-                    1 +
-                    ". " +
-                    cart[item].name +
-                    " - (" +
-                    cart[item].size +
-                    " / " +
-                    cart[item].variant +
-                    ")" +
-                    " - ₹" +
-                    cart[item].price}
+                  {slno + ". " + productName + " - ₹" + cart[item].price}
                   <div>
                     <HiMinusCircle
-                      onClick={() => {
-                        updateCartItem(
-                          item,
-                          cart[item].quantity,
-                          cart[item].price,
-                          cart[item].name,
-                          cart[item].size,
-                          cart[item].variant
-                        );
-                      }}
+                      onClick={decreaseItemQuantity.bind(this, item)}
                       size={20}
                     />
                     <span>{cart[item].quantity}</span>
                     <HiPlusCircle
-                      onClick={() => {
-                        addToCart(
-                          item,
-                          cart[item].quantity,
-                          cart[item].price,
-                          cart[item].name,
-                          cart[item].size,
-                          cart[item].variant
-                        );
-                      }}
+                      onClick={increaseItemQuantity.bind(this, item)}
                       size={20}
                     />
                     <MdDelete
-                      onClick={() => {
-                        removeItem(item);
-                      }}
+                      onClick={removeItemFromCart.bind(this, item)}
                       size={20}
                     />
                   </div>

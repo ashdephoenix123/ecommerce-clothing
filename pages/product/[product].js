@@ -1,6 +1,5 @@
 import api from "@/axios/instance";
 import connectDB from "@/middleware/conn";
-import ProductModel from "@/models/Product";
 import styles from "@/styles/product.module.scss";
 import Error from "next/error";
 import { useRouter } from "next/router";
@@ -9,28 +8,21 @@ import { BsFillBagFill } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Product = ({
-  addToCart,
-  buyNow,
-  productdetails,
-  findProduct,
-  variants,
-  error,
-}) => {
+const Product = ({ addToCart, buyNow, productdetails, error }) => {
+  let defaultVariant = productdetails.variants[0];
   const router = useRouter();
-  const { product } = router.query;
   const [pincode, setPincode] = useState("");
-  const [message, setMessage] = useState("");
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
-  const [variant, setVariant] = useState(productdetails.variants[0]);
+  const [size, setSize] = useState(defaultVariant.size[0]);
+  const [variant, setVariant] = useState(defaultVariant);
+
+  let prodid = productdetails._id + productdetails.name + size + variant.color;
 
   useEffect(() => {
     if (!error) {
-      setColor(findProduct.color);
-      setSize(findProduct.size);
+      setVariant(defaultVariant);
+      defaultVariant.size.length > 0 && setSize(defaultVariant.size[0]);
     }
-  }, [router.query]);
+  }, [router.query, defaultVariant, error]);
 
   const updatePincode = (e) => {
     const { value } = e.target;
@@ -39,7 +31,6 @@ const Product = ({
 
   const checkService = async () => {
     if (!pincode || pincode.length < 6) {
-      setMessage("Please enter a valid pincode.");
       return toast.error("Please enter a valid pincode.", {
         position: "bottom-center",
         autoClose: 3000,
@@ -55,7 +46,6 @@ const Product = ({
     const data = await response.json();
 
     if (Object.keys(data).includes(pincode)) {
-      setMessage("Yay! This Pincode is serviceable.");
       toast.success("Yay! This Pincode is serviceable.", {
         position: "bottom-center",
         autoClose: 3000,
@@ -67,7 +57,6 @@ const Product = ({
         theme: "light",
       });
     } else {
-      setMessage("Sorry! This Pincode is currently unserviceable.");
       toast.error("Sorry! This Pincode is currently unserviceable.", {
         position: "bottom-center",
         autoClose: 3000,
@@ -83,6 +72,28 @@ const Product = ({
 
   const refreshVariant = (newVariant) => {
     setVariant(newVariant);
+    setSize(newVariant.size[0]);
+  };
+
+  const refreshSizeVariant = (val) => {
+    setSize(val);
+  };
+
+  const addProductToCart = () => {
+    addToCart(
+      prodid,
+      1,
+      variant.price,
+      productdetails.name,
+      size,
+      variant.color
+    );
+    toast.success("Added to cart!");
+  };
+
+  const buyInstant = () => {
+    buyNow(prodid, 1, variant.price, productdetails.name, size, variant.color);
+    router.push("/checkout");
   };
 
   if (error) {
@@ -237,14 +248,14 @@ const Product = ({
                     );
                   })}
                 </div>
-                {Object.keys(variant).includes("size") && variant?.size && (
+                {variant?.size.length > 0 && (
                   <div className="flex ml-6 items-center">
                     <span className="mr-3">Size</span>
                     <div className="relative">
                       <select
                         value={size}
                         onChange={(e) => {
-                          refreshVariant(color, e.target.value);
+                          refreshSizeVariant(e.target.value);
                         }}
                         className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-500 text-xl pl-3 pr-10"
                       >
@@ -282,36 +293,16 @@ const Product = ({
                   )}
                 </span>
                 <button
-                  onClick={() => {
-                    addToCart(
-                      findProduct.productId,
-                      1,
-                      findProduct.price,
-                      findProduct.title,
-                      findProduct.size,
-                      findProduct.color
-                    );
-                    toast.success("Added to cart!");
-                  }}
-                  disabled={findProduct.availableQty === 0}
+                  onClick={addProductToCart}
+                  disabled={variant.stock === 0}
                   className="disabled:bg-green-300 flex ml-10 text-white bg-green-500 border-0 py-2 px-6 hover:bg-green-600 focus:outline-none rounded"
                 >
                   {" "}
                   <BsFillBagFill className="mr-3" size={20} /> Add To Cart
                 </button>
                 <button
-                  disabled={findProduct.availableQty === 0}
-                  onClick={() => {
-                    buyNow(
-                      findProduct.productId,
-                      1,
-                      findProduct.price,
-                      findProduct.title,
-                      findProduct.size,
-                      findProduct.color
-                    );
-                    router.push("/checkout");
-                  }}
+                  disabled={variant.stock === 0}
+                  onClick={buyInstant}
                   className="flex ml-5 text-white bg-green-500 border-0 py-2 px-6 hover:bg-green-600 disabled:bg-green-300 focus:outline-none rounded"
                 >
                   Buy Now
@@ -343,40 +334,23 @@ const Product = ({
 };
 
 export async function getServerSideProps(context) {
-  let error = null;
-  await connectDB();
-  const slug = context.query.product;
-  const productdetails = await api.get(`/getCommodity?slug=${slug}`);
-  const findProduct = await ProductModel.findOne({
-    productId: "boston-premium-tshirt",
-  });
-  if (!findProduct) {
+  try {
+    await connectDB();
+    const slug = context.query.product;
+    const productdetails = await api.get(`/getCommodity?slug=${slug}`);
+
     return {
-      props: { error: 404 },
+      props: {
+        productdetails: productdetails.data[0],
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        error: "Something went wrong!",
+      },
     };
   }
-  const variants = await ProductModel.find({
-    title: findProduct.title,
-    category: findProduct.category,
-  });
-  const colorsCollection = {};
-  for (let item of variants) {
-    if (colorsCollection[item.color]) {
-      colorsCollection[item.color][item.size] = { productId: item.productId };
-    } else {
-      colorsCollection[item.color] = {};
-      colorsCollection[item.color][item.size] = { productId: item.productId };
-    }
-  }
-
-  return {
-    props: {
-      error: error,
-      productdetails: productdetails.data[0],
-      findProduct: JSON.parse(JSON.stringify(findProduct)),
-      variants: JSON.parse(JSON.stringify(colorsCollection)),
-    },
-  };
 }
 
 export default Product;
