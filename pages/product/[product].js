@@ -9,13 +9,23 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Product = ({ addToCart, buyNow, productdetails, error }) => {
+  console.log(productdetails);
   let defaultVariant = productdetails.variants[0];
   const router = useRouter();
   const [pincode, setPincode] = useState("");
   const [size, setSize] = useState(defaultVariant.size[0]);
   const [variant, setVariant] = useState(defaultVariant);
 
-  let prodid = productdetails._id + productdetails.name + size + variant.color;
+  let prodid =
+    productdetails._id +
+    " " +
+    productdetails.name +
+    " " +
+    size +
+    " " +
+    variant.color +
+    " " +
+    productdetails.sku;
 
   useEffect(() => {
     if (!error) {
