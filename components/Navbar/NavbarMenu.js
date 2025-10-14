@@ -3,12 +3,12 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import styles from "../../styles/Navbar.module.scss";
 import ProfileMenu from "./ProfileMenu";
 
-const NavbarMenu = () => {
+const NavbarMenu = (props) => {
   return (
     <>
       <ul className={styles.list}>
         <li className={`${styles.list__item} ${styles.dropdown}`}>
-          <ProfileMenu />
+          <ProfileMenu {...props} />
         </li>
         <li className={`${styles.list__item} ${styles.dropdown}`}>
           <Link

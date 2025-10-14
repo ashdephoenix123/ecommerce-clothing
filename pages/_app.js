@@ -1,15 +1,15 @@
-import "@/styles/globals.scss";
-import Head from "next/head";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import TopMargin from "@/components/TopMargin";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import LoadingBar from "react-top-loading-bar";
-import { ThemeProvider } from "@mui/material";
-import theme from "@/theme";
-import { Provider } from "react-redux";
 import { store } from "@/store";
+import "@/styles/globals.scss";
+import theme from "@/theme";
+import { ThemeProvider } from "@mui/material";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import LoadingBar from "react-top-loading-bar";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -96,7 +96,7 @@ export default function App({ Component, pageProps }) {
   const logout = () => {
     localStorage.removeItem("usertoken");
     setUsertoken({ value: null });
-    router.push("/login");
+    router.replace("/login");
   };
 
   return (

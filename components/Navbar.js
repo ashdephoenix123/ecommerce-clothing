@@ -15,6 +15,7 @@ const Navbar = ({
   removeItem,
   subtotal,
   usertoken,
+  logout,
 }) => {
   return (
     <section className="relative z-10">
@@ -40,7 +41,7 @@ const Navbar = ({
         </Link>
         <NavbarList />
         <SearchBar />
-        <NavbarMenu />
+        <NavbarMenu usertoken={usertoken} logout={logout} />
         <Cart
           cart={cart}
           subtotal={subtotal}

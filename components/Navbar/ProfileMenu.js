@@ -1,18 +1,42 @@
 import { Box, Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { CiUser } from "react-icons/ci";
 import styles from "../../styles/Navbar.module.scss";
-import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
 
-const ProfileMenu = () => {
+const ProfileMenu = ({ usertoken, logout }) => {
+  const token = usertoken?.value || "";
+  const router = useRouter();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const viewMyAccount = () => {
+    handleClose();
+    router.push("/account");
+  };
+  const contact = () => {
+    handleClose();
+    router.push("/contact");
+  };
+  const viewWishList = () => {
+    handleClose();
+    router.push("/wishlist");
+  };
+  const viewMyOrders = () => {
+    handleClose();
+    if (token) {
+      router.push("/orders");
+    } else {
+      router.push("/login");
+    }
   };
 
   return (
@@ -55,14 +79,16 @@ const ProfileMenu = () => {
                 fontWeight: 600,
                 letterSpacing: theme.spacing(1) * 0.75,
               }}
+              onClick={logout}
             >
-              Login/SignUp
+              {token ? "Log Out" : "Login/SignUp"}
             </Button>
           </Stack>
         </MenuItem>
-        <MenuItem onClick={handleClose}>Orders</MenuItem>
-        <MenuItem onClick={handleClose}>Wishlist</MenuItem>
-        <MenuItem onClick={handleClose}>Contact Us</MenuItem>
+        {token && <MenuItem onClick={viewMyAccount}>My Account</MenuItem>}
+        <MenuItem onClick={viewMyOrders}>Orders</MenuItem>
+        <MenuItem onClick={viewWishList}>Wishlist</MenuItem>
+        <MenuItem onClick={contact}>Contact Us</MenuItem>
       </Menu>
     </>
   );
