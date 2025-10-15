@@ -161,6 +161,12 @@ const Checkout = ({
         // callback_url: `${process.env.NEXT_PUBLIC_HOST}/orders`,
         // callback_url: `${process.env.NEXT_PUBLIC_HOST}/api/callbackurl`,
         handler: async (response) => {
+          let payload = {
+            name: address.name,
+            address: address.address,
+            orderID,
+            response,
+          };
           const resp = await fetch(
             `${process.env.NEXT_PUBLIC_HOST}/api/callbackurl`,
             {
@@ -168,7 +174,7 @@ const Checkout = ({
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(response),
+              body: JSON.stringify(payload),
             }
           );
 
