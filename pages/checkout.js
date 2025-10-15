@@ -162,6 +162,7 @@ const Checkout = ({
         // callback_url: `${process.env.NEXT_PUBLIC_HOST}/api/callbackurl`,
         handler: async (response) => {
           let payload = {
+            email: address.email,
             name: address.name,
             address: address.address,
             orderID,

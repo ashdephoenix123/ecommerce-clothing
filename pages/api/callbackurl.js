@@ -56,7 +56,7 @@ export default async function handler(req, res) {
         name: sender.name,
         email: sender.email,
       };
-      message.to = [{ email: "akashsarki100@gmail.com", name: "Jane Smith" }];
+      message.to = [{ email: req.body.email, name: req.body.name }];
       emailAPI
         .sendTransacEmail(message)
         .then((res) => {
