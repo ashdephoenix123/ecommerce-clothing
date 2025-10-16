@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         name: sender.name,
         email: sender.email,
       };
-      message.to = [{ email: req.body.email, name: findUser.name }];
+      message.to = [{ email: req.body.email, name: "User" }];
       emailAPI
         .sendTransacEmail(message)
         .then((res) => {
