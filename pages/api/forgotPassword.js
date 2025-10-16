@@ -28,19 +28,15 @@ export default async function handler(req, res) {
         name: sender.name,
         email: sender.email,
       };
-      message.to = [{ email: req.body.email, name: "User" }];
-      let resp = "";
+      message.to = [{ email: findUser.email, name: findUser.name }];
       emailAPI
         .sendTransacEmail(message)
-        .then((res) => {
-          resp = res;
-          console.log(JSON.stringify(res.body));
-        })
+        .then(() => {})
         .catch((err) => {
           console.error("Error sending email:", err.body);
         });
 
-      res.status(200).json({ success: true, url, resp, findUser });
+      res.status(200).json({ success: true });
     } else {
       throw new Error("Request method not allowed");
     }
