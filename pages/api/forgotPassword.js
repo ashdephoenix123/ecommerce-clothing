@@ -40,7 +40,7 @@ export default async function handler(req, res) {
           console.error("Error sending email:", err.body);
         });
 
-      res.status(200).json({ success: true, url, resp });
+      res.status(200).json({ success: true, url, resp, findUser });
     } else {
       throw new Error("Request method not allowed");
     }
