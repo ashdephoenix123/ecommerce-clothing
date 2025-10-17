@@ -150,8 +150,7 @@ const Checkout = ({
     if (data.status === "created") {
       orderID = data.id;
       var options = {
-        key: "rzp_test_RSrQvYYBKxtjcS", // Enter the Key ID generated from the Dashboard
-        // key: process.env.RAZORPAY_KEYID, // Enter the Key ID generated from the Dashboard
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEYID, // Enter the Key ID generated from the Dashboard
         amount: subtotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "Sharkk & Co.",

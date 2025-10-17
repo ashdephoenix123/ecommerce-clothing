@@ -55,7 +55,7 @@ export default async function handler(req, res) {
       }
 
       let instance = new Razorpay({
-        key_id: process.env.RAZORPAY_KEYID,
+        key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEYID,
         key_secret: process.env.RAZORPAY_KEYSECRET,
       });
 
