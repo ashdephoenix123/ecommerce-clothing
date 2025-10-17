@@ -37,14 +37,13 @@ export default async function handler(req, res) {
         email: sender.email,
       };
       message.to = [{ email: userdetails.email, name: userdetails.name }];
-      emailAPI
-        .sendTransacEmail(message)
-        .then((res) => {
-          console.log(JSON.stringify(res.body));
-        })
-        .catch((err) => {
-          console.error("Error sending email:", err.body);
-        });
+
+      try {
+        await emailAPI.sendTransacEmail(message);
+      } catch (err) {
+        console.error("Brevo send error:", err.response?.text || err.message);
+        throw new Error("Failed to send email");
+      }
       res.status(200).json({ success: true });
     } else {
       throw new Error("Request method not allowed!");

@@ -33,14 +33,12 @@ export default async function handler(req, res) {
           email: sender.email,
         };
         message.to = [{ email: req.body.email, name: req.body.name }];
-        emailAPI
-          .sendTransacEmail(message)
-          .then((res) => {
-            console.log(JSON.stringify(res.body));
-          })
-          .catch((err) => {
-            console.error("Error sending email:", err.body);
-          });
+        try {
+          await emailAPI.sendTransacEmail(message);
+        } catch (err) {
+          console.error("Brevo send error:", err.response?.text || err.message);
+          throw new Error("Failed to send email");
+        }
 
         res.status(201).json({ success: true });
       }

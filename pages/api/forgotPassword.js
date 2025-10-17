@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         await emailAPI.sendTransacEmail(message);
       } catch (err) {
         console.error("Brevo send error:", err.response?.text || err.message);
-        throw new Error("Failed to send reset email");
+        throw new Error("Failed to send email");
       }
 
       res.status(200).json({
