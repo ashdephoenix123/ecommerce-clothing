@@ -1,7 +1,6 @@
 const Razorpay = require("razorpay");
 import connectDB from "@/middleware/conn";
 import Order from "../../models/Order";
-import Product from "@/models/Product";
 import pincode from "../pincode.json";
 import Commodity from "@/models/Commodity";
 
