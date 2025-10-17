@@ -29,14 +29,17 @@ export default async function handler(req, res) {
         email: sender.email,
       };
       message.to = [{ email: findUser.email, name: findUser.name }];
-      emailAPI
-        .sendTransacEmail(message)
-        .then(() => {})
-        .catch((err) => {
-          console.error("Error sending email:", err.body);
-        });
 
-      res.status(200).json({ success: true, url, findUser, sender });
+      try {
+        await emailAPI.sendTransacEmail(message);
+      } catch (err) {
+        console.error("Brevo send error:", err.response?.text || err.message);
+        throw new Error("Failed to send reset email");
+      }
+
+      res.status(200).json({
+        success: true,
+      });
     } else {
       throw new Error("Request method not allowed");
     }
