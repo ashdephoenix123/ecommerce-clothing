@@ -5,6 +5,7 @@ import { Pagination, Stack } from "@mui/material";
 
 const Product = ({ products, error }) => {
   if (error) {
+    console.log(JSON.parse(error));
     return <section className="error">Failed to load data!</section>;
   }
 
@@ -37,14 +38,13 @@ export async function getServerSideProps(context) {
     const allproducts = await api.get(`/getCommodities`);
     return {
       props: {
-        products: allproducts.data,
+        products: allproducts?.data || [],
       },
     };
   } catch (error) {
-    console.log(error);
     return {
       props: {
-        error: "Failed!",
+        error: JSON.stringify(error),
       },
     };
   }
