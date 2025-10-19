@@ -1,6 +1,7 @@
 import api from "@/axios/instance";
 import connectDB from "@/middleware/conn";
 import styles from "@/styles/product.module.scss";
+import { getAreaPincode } from "@/utils/helpers";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -9,7 +10,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Product = ({ addToCart, buyNow, productdetails, error }) => {
-  console.log(productdetails);
   let defaultVariant = productdetails.variants[0];
   const router = useRouter();
   const [pincode, setPincode] = useState("");
@@ -52,10 +52,9 @@ const Product = ({ addToCart, buyNow, productdetails, error }) => {
         theme: "light",
       });
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
-    const data = await response.json();
 
-    if (Object.keys(data).includes(pincode)) {
+    const areaDetails = await getAreaPincode(pincode);
+    if (areaDetails.success) {
       toast.success("Yay! This Pincode is serviceable.", {
         position: "bottom-center",
         autoClose: 3000,

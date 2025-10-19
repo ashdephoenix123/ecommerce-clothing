@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { HiPlusCircle, HiMinusCircle } from "react-icons/hi";
-import { MdDelete } from "react-icons/md";
+import { getAreaPincode } from "@/utils/helpers";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Script from "next/script";
+import { useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { HiMinusCircle, HiPlusCircle } from "react-icons/hi";
+import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useRouter } from "next/router";
 
 const Checkout = ({
   usertoken,
@@ -35,14 +36,13 @@ const Checkout = ({
   }
 
   const getPincode = async (value) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
-    const data = await response.json();
-    if (Object.keys(data).includes(value)) {
+    const areaDetails = await getAreaPincode(value);
+    if (areaDetails.success) {
       setAddress((prev) => {
         return {
           ...prev,
-          state: data[value][1],
-          city: data[value][0],
+          state: areaDetails.state,
+          city: areaDetails.city,
         };
       });
     } else {

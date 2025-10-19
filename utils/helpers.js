@@ -87,3 +87,29 @@ export const debounce = (callback, delay) => {
     }, delay);
   };
 };
+
+export const getAreaPincode = async (pincode) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/pincode`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ areaPincode: pincode }),
+      }
+    );
+    const data = await response.json();
+    if (response.status !== 200) throw new Error(response.error);
+    else {
+      return {
+        success: true,
+        city: data[pincode][1],
+        state: data[pincode][0],
+      };
+    }
+  } catch (error) {
+    return { success: false };
+  }
+};
