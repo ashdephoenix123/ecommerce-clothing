@@ -1,4 +1,5 @@
 import { getAreaPincode } from "@/utils/helpers";
+import { Backdrop, CircularProgress } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
@@ -30,6 +31,7 @@ const Checkout = ({
   });
   const [disabled, setDisabled] = useState(true);
   const [verified, setVerified] = useState(true);
+  const [open, setOpen] = useState(false);
 
   function onChange() {
     setVerified(false);
@@ -129,6 +131,7 @@ const Checkout = ({
 
   let orderID;
   const initiatePayment = async () => {
+    setOpen(true);
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/createorder`, {
       method: "POST",
       headers: {
@@ -178,7 +181,6 @@ const Checkout = ({
             }
           );
 
-          console.log(resp);
           if (resp.status) {
             router.replace(
               `/order?id=${response.razorpay_order_id}&clearCart=true`
@@ -213,6 +215,7 @@ const Checkout = ({
         theme: "light",
       });
     }
+    setOpen(false);
   };
   return (
     <>
@@ -474,6 +477,13 @@ const Checkout = ({
           </div>
         </section>
       </div>
+
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 };
