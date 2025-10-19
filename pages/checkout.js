@@ -180,8 +180,7 @@ const Checkout = ({
               body: JSON.stringify(payload),
             }
           );
-
-          if (resp.status) {
+          if (resp.status === 200) {
             router.replace(
               `/order?id=${response.razorpay_order_id}&clearCart=true`
             );
