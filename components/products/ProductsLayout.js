@@ -66,7 +66,7 @@ const ProductsLayout = ({ products }) => {
       <div className="flex-1 col-span-5 lg:col-span-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 self-start">
         {products.length === 0 && (
           <p className="flex justify-center items-center italic">
-            No {title} to display Or they are currently Out of Stock. Please try
+            Nothing to display Or they are currently Out of Stock. Please try
             again later.
           </p>
         )}
