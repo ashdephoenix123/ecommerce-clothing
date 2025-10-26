@@ -4,7 +4,6 @@ import ProductsLayout from "@/components/products/ProductsLayout";
 import { Pagination, Stack } from "@mui/material";
 
 const Product = ({ products, error }) => {
-  console.log(products);
   if (error) {
     console.log(JSON.parse(error));
     return <section className="error">Failed to load data!</section>;
@@ -29,8 +28,8 @@ export async function getServerSideProps(context) {
     categories: query?.categories?.split(",") || [],
     brands: query?.brands?.split(",") || [],
     colors: query?.colors?.split(",") || [],
-    fromPrice: query?.fromPrice || "0",
-    toPrice: query?.toPrice || "0",
+    fromPrice: query?.fromPrice || null,
+    toPrice: query?.toPrice || null,
     discount: query?.discount || "",
     sortby: query?.sortby || "recommended",
   };

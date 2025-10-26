@@ -13,12 +13,12 @@ const Filters = ({ filters }) => {
         options={filtersOption[0].options}
         selected={filters.categories}
       />
-      <Filter
+      {/* <Filter
         id="brands"
         label="Brands"
         options={filtersOption[1].options}
         selected={filters.brands}
-      />
+      /> */}
       <PriceFilter
         id="price"
         label="Price"
@@ -31,12 +31,12 @@ const Filters = ({ filters }) => {
         options={filtersOption[2].options}
         selected={filters.colors}
       />
-      <FilterRadio
+      {/* <FilterRadio
         id="discount"
         label="Discount Range"
         options={filtersOption[3].options}
         selected={filters.discount}
-      />
+      /> */}
     </Stack>
   );
 };
