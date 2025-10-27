@@ -2,6 +2,9 @@ import connectDB from "@/middleware/conn";
 import Commodity from "@/models/Commodity";
 
 export default async function handler(req, res) {
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
   try {
     if (req.method === "DELETE") {
       await connectDB();
