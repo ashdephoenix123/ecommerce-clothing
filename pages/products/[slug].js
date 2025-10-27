@@ -28,14 +28,18 @@ export async function getServerSideProps(context) {
     categories: query?.categories?.split(",") || [],
     brands: query?.brands?.split(",") || [],
     colors: query?.colors?.split(",") || [],
-    fromPrice: query?.fromPrice || "0",
-    toPrice: query?.toPrice || "0",
+    fromPrice: query?.fromPrice || null,
+    toPrice: query?.toPrice || null,
     discount: query?.discount || "",
     sortby: query?.sortby || "recommended",
   };
 
+  const config = {
+    "Content-Type": "application/json",
+  };
+
   try {
-    const allproducts = await api.get(`/getCommodities`);
+    const allproducts = await api.post(`/getCommodities`, filters, config);
     return {
       props: {
         products: allproducts?.data || [],
