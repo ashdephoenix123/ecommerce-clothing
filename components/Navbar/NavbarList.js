@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import MegaMenu from "../MegaMenu";
 import { menucategories } from "@/constants/menucategories";
+import Link from "next/link";
 
 const NavbarList = ({ megaMenuData }) => {
   const [menu, setMenu] = useState(null);
-  console.log(menu);
   const [isMegaMenuHovered, setIsMegaMenuHovered] = useState(false);
 
   const activateMegaMenu = (id) => {
@@ -28,7 +28,9 @@ const NavbarList = ({ megaMenuData }) => {
           onMouseOver={() => activateMegaMenu(menu.category._id)}
           onMouseLeave={handleMouseLeave}
         >
-          {menu.category.label}
+          <Link href={`/products?collection=${menu.category.slug}`}>
+            {menu.category.label}
+          </Link>
         </li>
       ))}
       {menu && (

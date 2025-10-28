@@ -12,12 +12,24 @@ export default async function handler(req, res) {
   const { id } = req.query; // For PUT and DELETE
 
   switch (method) {
-    // GET: Used to fetch all Cat3 items
     case "GET":
       try {
-        const categories = await Cat3.find({})
+        const { cat2slug } = req.query;
+
+        let filter = {};
+
+        if (cat2slug) {
+          const parentCat2 = await Cat2.findOne({ slug: cat2slug });
+          if (parentCat2) {
+            filter.cat2 = parentCat2._id;
+          } else {
+            return res.status(200).json({ success: true, data: [] });
+          }
+        }
+
+        const categories = await Cat3.find(filter)
           .populate("cat1", "label") // Get Cat1 label
-          .populate("cat2", "label") // Get Cat2 label
+          .populate("cat2", ["label", "slug"]) // Get Cat2 label
           .sort({ createdAt: 1 }); // Sort oldest to newest
         res.status(200).json({ success: true, data: categories });
       } catch (error) {

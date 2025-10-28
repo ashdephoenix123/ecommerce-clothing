@@ -28,8 +28,6 @@ export default function App({ Component, pageProps }) {
         const cat1data = await res.json();
 
         if (cat1data.success) {
-          console.log("Fetched Cat1 items:", cat1data.data);
-
           const menuPromises = cat1data.data.map(async (cat1) => {
             const menuRes = await fetch(`/api/megaMenu?cat1id=${cat1._id}`);
             const menuData = await menuRes.json();
