@@ -18,6 +18,46 @@ export default function App({ Component, pageProps }) {
   const [usertoken, setUsertoken] = useState({ value: null });
   const [progress, setProgress] = useState(0);
 
+  const [megaMenuData, setMegaMenuData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFullMenu = async () => {
+      try {
+        const res = await fetch(`/api/apiCat1`);
+        const cat1data = await res.json();
+
+        if (cat1data.success) {
+          console.log("Fetched Cat1 items:", cat1data.data);
+
+          const menuPromises = cat1data.data.map(async (cat1) => {
+            const menuRes = await fetch(`/api/megaMenu?cat1id=${cat1._id}`);
+            const menuData = await menuRes.json();
+
+            if (menuData.success) {
+              return {
+                category: cat1,
+                menuItems: menuData.data,
+              };
+            }
+            return null;
+          });
+
+          const allMenuData = await Promise.all(menuPromises);
+          setMegaMenuData(allMenuData.filter(Boolean)); // .filter(Boolean) removes any nulls from failed fetches
+        } else {
+          throw new Error("Failed to fetch Cat1 list.");
+        }
+      } catch (error) {
+        console.error("Error building full mega menu:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFullMenu();
+  }, []);
+
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(20);
@@ -122,6 +162,7 @@ export default function App({ Component, pageProps }) {
             clearCart={clearCart}
             removeItem={removeItem}
             subtotal={subtotal}
+            megaMenuData={megaMenuData}
           />
           <TopMargin />
           <main className="main">

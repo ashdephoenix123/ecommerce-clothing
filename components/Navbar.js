@@ -16,6 +16,7 @@ const Navbar = ({
   subtotal,
   usertoken,
   logout,
+  megaMenuData,
 }) => {
   return (
     <section className="relative z-10">
@@ -39,7 +40,7 @@ const Navbar = ({
             alt="company logo"
           />
         </Link>
-        <NavbarList />
+        <NavbarList megaMenuData={megaMenuData} />
         <SearchBar />
         <NavbarMenu usertoken={usertoken} logout={logout} />
         <Cart

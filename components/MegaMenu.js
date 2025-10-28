@@ -21,7 +21,7 @@ const MegaMenu = ({ categories, onClick, ...rest }) => {
     <DemoPaper variant="elevation" {...rest}>
       <div className="columns-2 md:columns-3 lg:columns-5 gap-8 overflow-y-auto">
         {categories.map((category) => (
-          <div key={category.id} className="mb-6 break-inside-avoid">
+          <div key={category._id} className="mb-6 break-inside-avoid">
             <Typography
               sx={{ color: theme.palette.primary.dark, fontWeight: 600, mb: 1 }}
               textAlign="left"
@@ -29,13 +29,13 @@ const MegaMenu = ({ categories, onClick, ...rest }) => {
               {category.label}
             </Typography>
             <div className="flex flex-col gap-1">
-              {category.options.map((option) => (
+              {category.children.map((option) => (
                 <Typography
-                  key={option.id}
+                  key={option._id}
                   textAlign="left"
                   component={Link}
                   onClick={onClick}
-                  href={`/products/${option.id}`}
+                  href={`/products/${option._id}`}
                   sx={{
                     "&:hover": {
                       fontWeight: 600,
