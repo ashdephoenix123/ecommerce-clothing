@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import MegaMenu from "../MegaMenu";
 import { menucategories } from "@/constants/menucategories";
+import Link from "next/link";
 
-const NavbarList = () => {
+const NavbarList = ({ megaMenuData }) => {
   const [menu, setMenu] = useState(null);
   const [isMegaMenuHovered, setIsMegaMenuHovered] = useState(false);
 
   const activateMegaMenu = (id) => {
-    const hovered = menucategories.find((menu) => menu.id === id);
+    const hovered = megaMenuData.find((menu) => menu.category._id === id);
     setMenu(hovered);
   };
 
@@ -20,19 +21,21 @@ const NavbarList = () => {
 
   return (
     <ul className="justify-center items-center mx-12 hidden lg:flex">
-      {menucategories.map((menu) => (
+      {megaMenuData.map((menu) => (
         <li
-          key={menu.id}
+          key={menu.category._id}
           className="px-8 py-12 text-white uppercase font-semibold text-xl"
-          onMouseOver={() => activateMegaMenu(menu.id)}
+          onMouseOver={() => activateMegaMenu(menu.category._id)}
           onMouseLeave={handleMouseLeave}
         >
-          {menu.label}
+          <Link href={`/products?collection=${menu.category.slug}`}>
+            {menu.category.label}
+          </Link>
         </li>
       ))}
       {menu && (
         <MegaMenu
-          categories={menu.categories}
+          categories={menu.menuItems}
           onClick={() => setIsMegaMenuHovered(false)}
           onMouseEnter={() => setIsMegaMenuHovered(true)}
           onMouseLeave={() => setIsMegaMenuHovered(false)}

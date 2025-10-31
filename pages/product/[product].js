@@ -133,7 +133,7 @@ const Product = ({ addToCart, buyNow, productdetails, error }) => {
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 relative">
               <h2 className="text-md title-font text-gray-500 tracking-widest capitalize">
-                {productdetails.category}
+                {productdetails.category.third.label}
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {productdetails.name}
@@ -350,7 +350,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        productdetails: productdetails.data[0],
+        productdetails: productdetails.data || null,
       },
     };
   } catch (error) {

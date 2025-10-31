@@ -5,7 +5,7 @@ import Filters from "../Filters";
 import ProductCard from "../ProductCard";
 import SortBy from "./SortBy";
 
-const ProductsLayout = ({ products }) => {
+const ProductsLayout = ({ products, categories }) => {
   const router = useRouter();
   const { query } = router;
   const initialFilterState = {
@@ -61,7 +61,7 @@ const ProductsLayout = ({ products }) => {
       </div>
 
       <div className="shrink-0 hidden lg:block">
-        <Filters filters={filters} />
+        <Filters filters={filters} categories={categories} />
       </div>
       <div className="flex-1 col-span-5 lg:col-span-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 self-start">
         {products.length === 0 && (

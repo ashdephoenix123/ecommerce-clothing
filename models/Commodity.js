@@ -13,10 +13,41 @@ const VariantSchema = new mongoose.Schema({
 const CommoditySchema = new mongoose.Schema(
   {
     sku: { type: String, unique: true, sparse: true, index: true },
-    slug: { type: String, required: true },
+    slug: { type: String, required: true, index: true },
     name: { type: String, required: true, trim: true },
     description: { type: String },
-    category: { type: String },
+
+    /**
+     * BRAND FIELD
+     * Added an ObjectId reference to the Brand model.
+     */
+    brand: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Brand",
+      index: true,
+      sparse: true, // Use sparse if the brand is optional
+    },
+
+    category: {
+      main: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Cat1",
+        index: true,
+      },
+      sub: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Cat2",
+        index: true,
+        sparse: true,
+      },
+      third: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Cat3",
+        index: true,
+        sparse: true,
+      },
+    },
+
     variants: { type: [VariantSchema], required: true },
   },
   { timestamps: true }

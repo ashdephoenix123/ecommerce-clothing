@@ -4,13 +4,13 @@ import Filter from "./Filter";
 import FilterRadio from "./FilterRadio";
 import PriceFilter from "./PriceFilter";
 
-const Filters = ({ filters }) => {
+const Filters = ({ filters, categories }) => {
   return (
     <Stack gap={2}>
       <Filter
         id="categories"
         label="Categories"
-        options={filtersOption[0].options}
+        options={categories}
         selected={filters.categories}
       />
       {/* <Filter

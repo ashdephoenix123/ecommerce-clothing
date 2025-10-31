@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
         />
       </div>
       <div className={styles.cardContent}>
-        <h3 className="uppercase">{product.category}</h3>
+        <h3 className="uppercase">{product.category.third.label}</h3>
         <h2>{product.name}</h2>
         <div className={styles.price}>
           {selectedVariant.stock !== 0 ? (

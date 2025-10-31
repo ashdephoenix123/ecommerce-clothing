@@ -18,10 +18,9 @@ export default async function handler(req, res) {
       for (let item in cart) {
         const itemid = item.split(" ")[0];
         const productInDB = await Commodity.findOne({
-          slug: "leather-handbag",
+          _id: itemid,
         }); //itemid
-        console.log(itemid);
-        console.log(productInDB, "\nproductInDB");
+
         if (!productInDB) throw new Error("Product Not found!");
         sumtotal += cart[item].price * cart[item].quantity;
         // if (cart[item].quantity > productInDB.availableQty) {

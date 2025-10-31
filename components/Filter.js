@@ -57,13 +57,13 @@ const Filter = ({ id, label, options, selected }) => {
           {options.slice(0, 8).map((option) => {
             return (
               <FormControlLabel
-                key={option.id}
+                key={option._id}
                 labelPlacement="start"
                 control={
                   <Checkbox
                     size="large"
-                    checked={Boolean(selected.includes(option.id))}
-                    onChange={() => handleChange(option.id)}
+                    checked={Boolean(selected.includes(option._id))}
+                    onChange={() => handleChange(option._id)}
                     icon={<IoSquareOutline />}
                     checkedIcon={<IoCheckbox />}
                   />
