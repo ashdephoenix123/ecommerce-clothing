@@ -9,15 +9,13 @@ const Product = ({ products, categories, error }) => {
     return <section className="error">Failed to load data!</section>;
   }
 
-  console.log("categories\n", categories);
-
   return (
     <section className="p-10">
       <PageInfo />
-      <ProductsLayout products={products} categories={categories} />
-      <Stack direction="row" justifyContent="center" sx={{ my: 8 }}>
+      <ProductsLayout products={products.commodities} categories={categories} />
+      {/* <Stack direction="row" justifyContent="center" sx={{ my: 8 }}>
         <Pagination count={10} color="primary" />
-      </Stack>
+      </Stack> */}
     </section>
   );
 };
