@@ -13,29 +13,41 @@ export default async function handler(req, res) {
     await connectDB();
     const {
       categories,
-      brands, // <-- Note: You are destructuring this but not using it in filters
+      brands, // <-- Now being used!
       colors,
       fromPrice,
       toPrice,
-      discount, // <-- Note: You are destructuring this but not using it
+      discount,
       sortby,
-      page: reqPage, // <-- Get page from request body
-      limit: reqLimit, // <-- Get limit from request body
+      page: reqPage,
+      limit: reqLimit,
     } = req.body;
 
     // --- 1. Pagination Setup ---
-    // Parse page and limit, providing safe defaults
     const page = parseInt(reqPage) || 1;
-    const limit = parseInt(reqLimit) || 12; // Default to 12 items per page
+    const limit = parseInt(reqLimit) || 12;
     const skip = (page - 1) * limit;
 
-    // --- 2. Filter Setup ---
-    // (This logic is the same as yours)
+    // --- 2. Filter Setup (MODIFIED) ---
     const filters = {};
 
-    if (categories && categories.length > 0) {
-      filters.category = { $in: categories };
+    // --- NEW: Brand Filter ---
+    if (brands && brands.length > 0) {
+      filters.brand = { $in: brands };
     }
+
+    // --- NEW: Category Filter Logic ---
+    // Your old logic `filters.category = ...` will not work.
+    // This new logic searches for matching IDs in main, sub, OR third.
+    if (categories && categories.length > 0) {
+      filters.$or = [
+        { "category.main": { $in: categories } },
+        { "category.sub": { $in: categories } },
+        { "category.third": { $in: categories } },
+      ];
+    }
+
+    // (These filters are the same and are correct)
     if (colors && colors.length > 0) {
       filters["variants.color"] = { $in: colors };
     }
@@ -48,25 +60,98 @@ export default async function handler(req, res) {
         filters["variants.price"].$lte = Number(toPrice);
       }
     }
-    // TODO: You could add your 'brands' and 'discount' filters here
 
-    // --- 3. Aggregation Pipeline Setup ---
-    // We will build a dynamic pipeline to handle all cases
+    // --- 3. Aggregation Pipeline Setup (MODIFIED) ---
     const pipeline = [];
 
     // Stage 1: Match documents based on filters
     pipeline.push({ $match: filters });
 
-    // Stage 2: Apply Sorting or Sampling
-    // IMPORTANT: 'sortby' must be handled *before* pagination
+    // --- START: ADDED STAGES TO POPULATE (FILL IN) DATA ---
+    //
+
+    // Stage 2: Populate Brand
+    pipeline.push({
+      $lookup: {
+        from: "brands", // <-- ***CHECK THIS COLLECTION NAME***
+        localField: "brand",
+        foreignField: "_id",
+        pipeline: [{ $project: { _id: 1, label: 1, slug: 1 } }], // Only get these fields
+        as: "brand",
+      },
+    });
+
+    // Stage 3: Unwind Brand (turns array into object)
+    pipeline.push({
+      $unwind: {
+        path: "$brand",
+        preserveNullAndEmptyArrays: true, // Keep product if brand is missing
+      },
+    });
+
+    // Stage 4: Populate Cat1 (Main)
+    pipeline.push({
+      $lookup: {
+        from: "cat1", // <-- ***CHECK THIS COLLECTION NAME (e.g., 'cat1' or 'cat1s'?)***
+        localField: "category.main",
+        foreignField: "_id",
+        pipeline: [{ $project: { _id: 1, label: 1, slug: 1 } }],
+        as: "category.main",
+      },
+    });
+
+    // Stage 5: Unwind Cat1 (Main)
+    pipeline.push({
+      $unwind: {
+        path: "$category.main",
+        preserveNullAndEmptyArrays: true, // Keep product if category is missing
+      },
+    });
+
+    // Stage 6: Populate Cat2 (Sub)
+    pipeline.push({
+      $lookup: {
+        from: "cat2", // <-- ***CHECK THIS COLLECTION NAME***
+        localField: "category.sub",
+        foreignField: "_id",
+        pipeline: [{ $project: { _id: 1, label: 1, slug: 1 } }],
+        as: "category.sub",
+      },
+    });
+
+    // Stage 7: Unwind Cat2 (Sub)
+    pipeline.push({
+      $unwind: {
+        path: "$category.sub",
+        preserveNullAndEmptyArrays: true, // Keep product if sub-category is missing
+      },
+    });
+
+    // Stage 8: Populate Cat3 (Third)
+    pipeline.push({
+      $lookup: {
+        from: "cat3", // <-- ***CHECK THIS COLLECTION NAME***
+        localField: "category.third",
+        foreignField: "_id",
+        pipeline: [{ $project: { _id: 1, label: 1, slug: 1 } }],
+        as: "category.third",
+      },
+    });
+
+    // Stage 9: Unwind Cat3 (Third)
+    pipeline.push({
+      $unwind: {
+        path: "$category.third",
+        preserveNullAndEmptyArrays: true, // Keep product if third-category is missing
+      },
+    });
+
+    // --- END: ADDED STAGES ---
+
+    // Stage 10: Apply Sorting or Sampling (MODIFIED)
     if (sortby === "recommended") {
-      // --- A: Random Sampling ---
-      // NOTE: Paginating a $sample is "unstable". Each request (Page 1, Page 2)
-      // will fetch a *different* random set of 500 documents.
-      // This is generally acceptable for a "recommended" feed.
       pipeline.push({ $sample: { size: 500 } });
     } else {
-      // --- B: Standard Sorting ---
       const sortOptions = {};
       if (sortby === "whats-new") {
         sortOptions.createdAt = -1;
@@ -74,41 +159,38 @@ export default async function handler(req, res) {
         sortOptions["variants.price"] = 1;
       } else if (sortby === "price-desc") {
         sortOptions["variants.price"] = -1;
-        // --- ADD THESE ---
       } else if (sortby === "name-asc") {
-        sortOptions.name = 1; // Sort by name ascending
+        sortOptions.name = 1;
       } else if (sortby === "name-desc") {
-        sortOptions.name = -1; // Sort by name descending
-      } else if (sortby === "category-asc") {
-        sortOptions.category = 1; // Sort by category ascending
+        sortOptions.name = -1;
+      }
+      // --- MODIFIED SORT ---
+      // Your old `sortOptions.category = 1` won't work.
+      // This now sorts by the populated 'label' of the main category.
+      else if (sortby === "category-asc") {
+        sortOptions["category.main.label"] = 1;
       } else if (sortby === "category-desc") {
-        sortOptions.category = -1; // Sort by category descending
-        // --- END ADD ---
-      } else {
-        sortOptions.createdAt = -1; // Default
+        sortOptions["category.main.label"] = -1;
+      }
+      // --- END MODIFIED ---
+      else {
+        sortOptions.createdAt = -1;
       }
       pipeline.push({ $sort: sortOptions });
     }
 
-    // Stage 3: Apply Pagination and Get Total Count using $facet
-    // $facet allows us to run two "sub-pipelines" in parallel:
-    // 1. 'metadata': Gets the total count of *all* matched documents
-    // 2. 'data': Gets just the documents for the *current page*
+    // Stage 11: Apply Pagination and Get Total Count ($facet)
     pipeline.push({
       $facet: {
         metadata: [{ $count: "totalCommodities" }],
         data: [{ $skip: skip }, { $limit: limit }],
       },
     });
-    // [Image of MongoDB aggregation pipeline with $facet for pagination]
 
     // --- 4. Execute the Pipeline ---
     const results = await Commodity.aggregate(pipeline);
 
     // --- 5. Format the Response ---
-    // The 'results' array will look like:
-    // [ { metadata: [ { totalCommodities: 50 } ], data: [ ...commodities... ] } ]
-
     const commodities = results[0].data;
     const totalCommodities =
       results[0].metadata.length > 0
@@ -117,7 +199,6 @@ export default async function handler(req, res) {
 
     const totalPages = Math.ceil(totalCommodities / limit);
 
-    // Send a structured response
     res.status(200).json({
       commodities, // The array of items for the current page
       pagination: {
