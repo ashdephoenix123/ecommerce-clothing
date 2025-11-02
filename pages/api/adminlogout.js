@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       secure: true,
       maxAge: 0, // <-- Set to 0 to expire immediately
       path: "/",
-      sameSite: "None", // <-- Must match the login cookie's setting
+      sameSite: "Strict", // <-- Must match the login cookie's setting
     };
 
     // 2. Serialize the cookie with an empty value and expired maxAge
