@@ -1,24 +1,10 @@
 import connectDB from "@/middleware/conn";
-import User from "../../models/User";
 import { serialize } from "cookie";
-import { allowedOrigins } from "@/config/allowedDomains";
+import User from "../../models/User";
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
 export default async function handler(req, res) {
-  // --- NEW: CORS Whitelist Logic ---
-  const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Access-Control-Allow-Credentials", "true"); // <-- Crucial for cookies
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
-  }
-  // --- END NEW CORS LOGIC ---
-
   // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
     return res.status(200).end();
@@ -56,7 +42,7 @@ export default async function handler(req, res) {
             secure: true, // `secure` must be true for SameSite=None
             maxAge: 60 * 60 * 24, // 1 day
             path: "/",
-            sameSite: "None",
+            sameSite: "Strict",
           };
           // --- END UPDATED COOKIE LOGIC ---
 

@@ -1,20 +1,6 @@
-import { allowedOrigins } from "@/config/allowedDomains";
 import { serialize } from "cookie";
 
 export default async function handler(req, res) {
-  // --- NEW: CORS Whitelist Logic ---
-  // This is also identical to your login API
-  const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
-  }
-
   // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
     return res.status(200).end();
