@@ -5,6 +5,9 @@ import User from "../../models/User";
 const CryptoJS = require("crypto-js");
 
 export default async function handler(req, res) {
+  // if (req.method === "OPTIONS") {
+  //   return res.status(200).end();
+  // }
   try {
     if (req.method === "POST") {
       const { name, email } = req.body;
