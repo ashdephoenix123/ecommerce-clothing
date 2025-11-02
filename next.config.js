@@ -45,7 +45,7 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://next-ecomm-product-management.vercel.app/",
+            value: "https://next-ecomm-product-management.vercel.app",
           },
           {
             key: "Access-Control-Allow-Methods",
