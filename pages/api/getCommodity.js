@@ -1,5 +1,6 @@
 import Commodity from "@/models/Commodity";
 import connectDB from "@/middleware/conn";
+import "@/models/Brands";
 
 export default async function handler(req, res) {
   // A request to get data by slug should be a GET request
