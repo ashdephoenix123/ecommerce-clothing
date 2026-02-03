@@ -28,7 +28,7 @@ const NavbarList = ({ megaMenuData }) => {
           onMouseOver={() => activateMegaMenu(menu.category._id)}
           onMouseLeave={handleMouseLeave}
         >
-          <Link href={`/products?collection=${menu.category.slug}`}>
+          <Link href={`/products/50-to-90-percent-sale`}>
             {menu.category.label}
           </Link>
         </li>

@@ -26,7 +26,9 @@ const MegaMenu = ({ categories, onClick, ...rest }) => {
               sx={{ color: theme.palette.primary.dark, fontWeight: 600, mb: 1 }}
               textAlign="left"
             >
-              <Link href={`/products/${category.slug}`}>{category.label}</Link>
+              <Link href={`/products/50-to-90-percent-sale`}>
+                {category.label}
+              </Link>
             </Typography>
             <div className="flex flex-col gap-1">
               {category.children.map((option) => (
@@ -35,7 +37,7 @@ const MegaMenu = ({ categories, onClick, ...rest }) => {
                   textAlign="left"
                   component={Link}
                   onClick={onClick}
-                  href={`/products/${category.slug}?categories=${option.slug}`}
+                  href={`/products/50-to-90-percent-sale`}
                   sx={{
                     "&:hover": {
                       fontWeight: 600,
